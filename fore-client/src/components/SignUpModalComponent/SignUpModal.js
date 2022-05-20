@@ -18,12 +18,13 @@ function stringToHash(string) {
 }
 
 const SignUpModal = (props) => {
-
+    var file = '';
+    
     const signUpBtnClick = () => {
         var userName = document.getElementById('username-su-input').value;
         var userEmail = document.getElementById('email-su-input').value;
         var userPassword = stringToHash(document.getElementById('password-su-input').value);
-
+        
         const article = {
             name: userName,
             email: userEmail,
@@ -31,7 +32,14 @@ const SignUpModal = (props) => {
         }
 
         axios.post('http://localhost:3000/users/', article)
-            .then(response => window.location.replace("http://localhost:3001/"))
+            .then(response =>{
+                const id = window.location.replace("http://localhost:3001/");
+                if(file[0].name !== ''){
+                    // sacuvaj file
+                    console.log(file); // radi
+                    
+                }
+            })
             .catch(err => console.log(err));
     }
 
@@ -58,6 +66,9 @@ const SignUpModal = (props) => {
                         <br></br>
                         <h5>Password</h5>
                         <Form.Control id='password-su-input' type="password" placeholder="Password"/>
+                        <br></br>
+                        <h5>Choose a photo</h5>
+                        <Form.Control id='photo-su-input' type="file" onChange={(e) => {file = e.target.files;}} />
                     </Form.Group>
                 <div className='d-flex justify-content-center'>
                     <Button variant="primary" size="md" onClick={() => signUpBtnClick()}>Sign up</Button>
