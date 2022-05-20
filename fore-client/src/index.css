@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: whitesmoke;
   height: 100%;
   background-image: url('C:\\Users\\DIO\\Desktop\\IT_Projekat\\fore-client\\src\\cool-background.png');
 }
@@ -23,16 +22,6 @@ td, tr, th {
 table {
   border: black 1px solid;
   border-collapse: collapse;
-}
-
-.user-card-div{
-  width: 14rem;
-  height: 17rem; 
-  display: table; 
-  overflow: hidden;
-  margin: 15px;
-  z-index: -1;
-  background-color: rgba(169, 169, 169, 0.6);
 }
 
 .card-container{
@@ -130,4 +119,89 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-top: 1px solid rgba(255, 255, 255);
+}
+
+/* 
+.dots{
+  height: 4px;
+  width: 4px;
+  margin-bottom: 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.reply small{
+  color: #b7b4b4;
+}
+
+.reply small:hover{
+  color: green;
+  cursor: pointer;
+} */
+
+.comment-card {  
+  border: none;
+  box-shadow: 5px 6px 6px 2px #e9ecef;
+  border-radius: 4px;
+}
+
+.dots{
+  height: 4px;
+  width: 4px;
+  margin-bottom: 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.badge{
+  padding: 7px;
+  padding-right: 9px;
+  padding-left: 16px;
+  box-shadow: 5px 6px 6px 2px #e9ecef;
+}
+
+.user-img{
+  margin-top: 4px;
+  width: 30px;
+  height: 30px;
+  margin-right: 0.5rem;
+  z-index: 0;
+  position: relative;
+}
+
+.check-icon{
+  font-size: 17px;
+  color: #c3bfbf;
+  top: 1px;
+  position: relative;
+  margin-left: 3px;
+}
+
+.form-check-input{
+  margin-top: 6px;
+  margin-left: -24px !important;
+  cursor: pointer;
+}
+
+.form-check-input:focus{
+  box-shadow: none;
+}
+
+.icons i{
+  margin-left: 8px;
+}
+
+.reply{
+  margin-left: 12px;
+}
+
+.reply small{
+  color: #b7b4b4;
+}
+
+.reply small:hover{
+  color: green;
+  cursor: pointer;
 }

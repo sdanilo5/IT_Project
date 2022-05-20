@@ -1,13 +1,10 @@
 import React from 'react';
-import BackgroundImage from '../BackgroundImageComponent/BackgroundImage';
-import {Link} from 'react-router-dom';
-import {Card, Container, Col} from 'react-bootstrap';
-import JokeDtailsModalComponent from '../JokeDetailsModalComponent/JokeDetailsModalComponent';
-import axios from 'axios';
+import {Card} from 'react-bootstrap';
+import JokeDetailsModal from '../JokeDetailsModalComponent/JokeDetailsModal';
 
 var variants = ['Primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info',  'Light', 'Dark'];
 
-const SingleJoke = (props) => {
+const SingleJoke = React.memo((props) => {
     const [modalShow, setModalShow] = React.useState(false);
     var variant = variants[Math.floor(Math.random() * variants.length)];
 
@@ -17,7 +14,7 @@ const SingleJoke = (props) => {
                 bg={variant.toLowerCase()}
                 key={variant}
                 text={variant.toLowerCase() === 'light' || variant.toLowerCase() === 'warning' ? 'dark' : 'white'}
-                style={{ width: '18rem' }}
+                style={{ width: '18rem', cursor:'pointer' }}
                 className={variant.toLowerCase() === 'light' || variant.toLowerCase() === 'warning' ? `col-sm-2 col-md-4 col-lg-4 mb-5 btn-outline-dark` : `col-sm-2 col-md-4 col-lg-4 mb-5 btn-outline-light`}
                 onClick={() => setModalShow(true)}
                 >
@@ -28,7 +25,7 @@ const SingleJoke = (props) => {
                 </Card.Body>
             </Card>
 
-            <JokeDtailsModalComponent 
+            <JokeDetailsModal
                 id={props.joke.id} 
                 question={props.joke.question} 
                 answer={props.joke.answer} 
@@ -41,6 +38,6 @@ const SingleJoke = (props) => {
             />
         </>
     )
-}
+})
 
 export default SingleJoke;

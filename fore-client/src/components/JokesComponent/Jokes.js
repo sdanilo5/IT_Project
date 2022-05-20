@@ -1,9 +1,7 @@
 import './../../index.css'
-import {React, useEffect, useState} from 'react';
+import React from 'react';
 import axios from 'axios';
-import Webimage from '../BackgroundImageComponent/BackgroundImage';
 import SingleJoke from '../SingleJokeComponent/SingleJoke';
-import {Link} from 'react-router-dom';
 import {
     Container,
     Row,
@@ -12,10 +10,10 @@ import {
 
 } from 'react-bootstrap';
 
-function Jokes(){
-    const [state, setState] = useState({jokes: []});
+const Jokes = React.memo(() => {
+    const [state, setState] = React.useState({jokes: []});
 
-    useEffect(() => {
+    React.useEffect(() => {
         axios.get('http://localhost:3000/jokes')
             .then(response => {
                 const joke = {
@@ -58,21 +56,7 @@ function Jokes(){
                 }
             </Container>
         </>    
-        // <div>
-        //     <h1 className='text-center'>Jokes Page</h1>
-        //     <div className='comp-parent-container'>
-        //         <div className='comp-container-div'>
-        //             {
-        //                 state.jokes.map(joke => {
-        //                     return (
-        //                         <SingleJoke id={joke.id} question={joke.question} answer={joke.answer} />
-        //                     )
-        //                 })
-        //             }
-        //         </div>
-        //     </div>
-        // </div>
     );
-}
+})
 
 export default Jokes;
