@@ -4,14 +4,27 @@ import axios from 'axios';
 import SingleJoke from '../SingleJokeComponent/SingleJoke';
 import {
     Container,
-    Row,
-    Col,
-    Card,
-
 } from 'react-bootstrap';
+
+
+var variants = [
+    'Success', 
+    'Warning', 
+    'Light', 
+    'Dark'
+];
+var ind = -1;
+const incrementInd = () => {
+    ind=ind+1;
+    if(ind === variants.length){
+        ind = 0;
+    }
+    return ind;
+}
 
 const Jokes = React.memo(() => {
     const [state, setState] = React.useState({jokes: []});
+    
 
     React.useEffect(() => {
         axios.get('http://localhost:3000/jokes')
@@ -50,6 +63,7 @@ const Jokes = React.memo(() => {
                                     key={joke.joke.id} 
                                     joke={joke.joke}
                                     user={joke.user}
+                                    variant = {variants[incrementInd()]}
                                 />
                             )
                     })

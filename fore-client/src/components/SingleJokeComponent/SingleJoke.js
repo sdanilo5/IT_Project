@@ -6,7 +6,7 @@ var variants = ['Primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 
 
 const SingleJoke = React.memo((props) => {
     const [modalShow, setModalShow] = React.useState(false);
-    var variant = variants[Math.floor(Math.random() * variants.length)];
+    var variant = props.variant;
 
     return (
         <>
