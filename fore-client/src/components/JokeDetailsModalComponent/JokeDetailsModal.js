@@ -16,6 +16,7 @@ const JokeDtailsModal = React.memo((props) => {
                 {
                   userName: comm.name,
                   comment: {
+                    id: comm.id,
                     text: comm.text,
                     dateCreated: `${comm.dateCreated}`.split('T')[0]
                   }
@@ -38,10 +39,16 @@ const JokeDtailsModal = React.memo((props) => {
       };
 
       axios.post('http://localhost:3000/comments/', article)
-        .then(response => console.log(response))
+        .then(response => {
+          console.log(response);
+          if(response.status === 200){
+            // setTimeout(() => setUpdate(!update), 1000);
+            setUpdate(!update);
+            const commentInput = document.getElementById('comment-input');
+            commentInput.value = "";
+          }
+        })
         .catch(err => console.error(err));
-      
-      setTimeout(() => setUpdate(!update), 1000);
     }
 
     const handleChange = (event) => {
@@ -53,6 +60,19 @@ const JokeDtailsModal = React.memo((props) => {
         event.preventDefault();
         submitComment();
       }
+    }
+
+    const removeComment = (id) => {
+      axios.delete(`http://localhost:3000/comments/${id}`)
+        .then(response => {
+          if(response.status === 200){
+            setUpdate(!update);
+          }
+          else{
+            console.log('ERROR CODE ', response.status);
+          }
+        })
+        .catch(err => console.error(err));
     }
 
     return (
@@ -90,7 +110,7 @@ const JokeDtailsModal = React.memo((props) => {
                               </div>
                               <div class="action d-flex justify-content-between mt-2 align-items-center">
                                 <div class="reply px-4">
-                                    <small>Remove</small>
+                                    <small onClick={() => removeComment(comment.comment.id)}>Remove</small>
                                 </div>
                                 <div class="icons align-items-center">
                                     <i class="fa fa-star text-warning"></i>
