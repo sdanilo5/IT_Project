@@ -8,9 +8,11 @@ const SingleUser = (props) => {
             className={`card text-center border border-white rounded shadow`}
             style={{ 
                 cursor: 'pointer', 
-                backgroundColor: 'rgba(169, 169, 169, 0.6)' }}
+                backgroundColor: 'rgba(169, 169, 169, 0.6)',
+                marginBottom: '2rem'
+            }}
         >
-            <div className='' style={{display: 'table-row',zIndex:'1'}}>
+            <div className='' style={{display: 'table-row', zIndex: '1'}}>
                 <Image
                     style={{width: '9rem', height: '9rem', position: 'relative', margin: '2rem 2rem 0rem 2rem'}}
                     src={img}

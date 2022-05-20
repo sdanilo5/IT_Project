@@ -1,14 +1,38 @@
 import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
+import axios from 'axios';
+
+function stringToHash(string) {
+                  
+    var hash = 0;
+      
+    if (string.length == 0) return hash;
+      
+    for (let i = 0; i < string.length; i++) {
+        let char = string.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+      
+    return hash;
+}
 
 const SignUpModal = (props) => {
 
     const signUpBtnClick = () => {
         var userName = document.getElementById('username-su-input').value;
-        var email = document.getElementById('email-su-input').value;
-        var password = document.getElementById('password-su-input').value;
+        var userEmail = document.getElementById('email-su-input').value;
+        var userPassword = stringToHash(document.getElementById('password-su-input').value);
 
-        
+        const article = {
+            name: userName,
+            email: userEmail,
+            password: userPassword
+        }
+
+        axios.post('http://localhost:3000/users/', article)
+            .then(response => window.location.replace("http://localhost:3001/"))
+            .catch(err => console.log(err));
     }
 
     return(
