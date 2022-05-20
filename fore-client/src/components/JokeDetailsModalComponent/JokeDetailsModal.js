@@ -27,7 +27,7 @@ const JokeDtailsModal = React.memo((props) => {
           .catch(err => console.error("Error: ", err));
     }, [update])
 
-    const submitComment = (event) => {
+    const submitComment = () => {
       if(comment === ""){
         return;
       }
@@ -42,7 +42,6 @@ const JokeDtailsModal = React.memo((props) => {
         .then(response => {
           console.log(response);
           if(response.status === 200){
-            // setTimeout(() => setUpdate(!update), 1000);
             setUpdate(!update);
             const commentInput = document.getElementById('comment-input');
             commentInput.value = "";
