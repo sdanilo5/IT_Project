@@ -32,7 +32,7 @@ function Home() {
                             className='btn btn-outline-success btn-lg m-2' 
                             onClick={() => setSignUpModalShow(true)}
                         >Sign Up</btn>
-                        <p className='text-center'>Make your first joke!</p>
+                        <p className='text-center text-muted'>Make your first joke!</p>
                     </blockquote>
                 </Col>
                 <Col 
@@ -44,7 +44,7 @@ function Home() {
                             className='btn btn-outline-primary btn-lg m-2'
                             onClick={() => setLogInModalShow(true)}
                         >Log In</btn>
-                        <p className='text-center'>Be the first one to make joke today!</p>
+                        <p className='text-center text-muted'>Be the first one to make joke today!</p>
                     </blockquote>
                 </Col>
             </Row>
