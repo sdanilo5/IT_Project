@@ -46,7 +46,7 @@ const SignUpModal = (props) => {
     return(
         <Modal
           {...props}
-          size="lg"
+          size="md"
           aria-labelledby="contained-modal-title-vcenter"
           centered
           animation
@@ -56,7 +56,6 @@ const SignUpModal = (props) => {
                 <h1>Sign Up</h1>
             </Modal.Header>
             <Modal.Body>
-                
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <h5>Username</h5>
                         <Form.Control id='username-su-input' type="text" placeholder="Username"/>
@@ -66,9 +65,6 @@ const SignUpModal = (props) => {
                         <br></br>
                         <h5>Password</h5>
                         <Form.Control id='password-su-input' type="password" placeholder="Password"/>
-                        <br></br>
-                        <h5>Choose a photo</h5>
-                        <Form.Control id='photo-su-input' type="file" onChange={(e) => {file = e.target.files;}} />
                     </Form.Group>
                 <div className='d-flex justify-content-center'>
                     <Button variant="primary" size="md" onClick={() => signUpBtnClick()}>Sign up</Button>
