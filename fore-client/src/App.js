@@ -39,9 +39,9 @@ function App() {
                 <Nav.Link href="/jokes">Jokes</Nav.Link>
                 <Nav.Link href="/users">Users</Nav.Link>
               </Nav>
-              <Nav>
-                <Nav.Link href='#' onClick={() => setModalShow(true)}>Sign up</Nav.Link>
-                <Nav.Link href='#'>Log in</Nav.Link>
+              <Nav >
+                <Nav.Link onClick={() => setModalShow(true)}>Sign up</Nav.Link>
+                <Nav.Link>Log in</Nav.Link>
                 {/* to show when user is logged in
                 <NavDropdown title="My Account" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="#">Action</NavDropdown.Item>
