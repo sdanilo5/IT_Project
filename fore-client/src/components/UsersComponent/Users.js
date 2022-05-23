@@ -16,7 +16,7 @@ const Users = (props) => {
 
     return(
         <>
-            <h1 className='center-text text-light'>Users Page</h1>
+            <h1 className='text-center text-light'>Users Page</h1>
             <Container className='card-container'>
                 {
                     users1.map(u => (

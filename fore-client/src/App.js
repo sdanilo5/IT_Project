@@ -4,7 +4,7 @@ import './App.css';
 import Home from './components/HomeComponent/Home';
 import Jokes from './components/JokesComponent/Jokes';
 import Users from './components/UsersComponent/Users';
-import JokeDetails from './components/JokeDetailsComponent/JokeDetails';
+import ProfilePage from './components/ProfilePageComponent/ProfilePage';
 import {
           BrowserRouter as Router,
           Routes, 
@@ -60,8 +60,8 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/jokes' element={<Jokes />} />
-          <Route exact path='/jokes/:id' element={<JokeDetails />} />
           <Route exact path='/users' element={<Users />} />
+          <Route exact path='/users/:id' element={<ProfilePage />} />
         </Routes>
       </Router>
     </div>
