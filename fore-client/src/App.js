@@ -21,10 +21,6 @@ import SignUpModal from './components/SignUpModalComponent/SignUpModal';
 function App() {
   const [modalShow, setModalShow] = React.useState(false);
 
-  const signUp = () => {
-    // signup functionallity
-  }
-
   return (
     <div  className='body-div'>
       <Router>
