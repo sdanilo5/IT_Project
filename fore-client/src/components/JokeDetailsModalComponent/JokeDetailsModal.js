@@ -11,7 +11,6 @@ const JokeDtailsModal = React.memo((props) => {
     React.useEffect(() => {
         axios.get(`http://localhost:3000/comments/${props.id}`)
           .then(response => {
-              console.log(response.data);
               let comms = response.data.map(comm => (
                 {
                   user: {

@@ -7,13 +7,22 @@ const getAllUsers = async () => {
 
 
 const getUserById = async (id) => {
-    const [results, metadata] = await dbConnection.query(
+    const [results, metadata1] = await dbConnection.query(
         `SELECT * FROM user WHERE id = ?`, 
         {
             replacements: [id]
         }
     );
-    return results[0];
+    const [userJokes, metadata2] = await dbConnection.query( 
+        `SELECT id, question, answer, dateCreated, dateUpdated
+        FROM fora 
+        WHERE userId = ?`, 
+        {
+            replacements: [id]
+        }
+    );
+
+    return [results[0], userJokes];
 }
 
 const insertUser = async (user) => {

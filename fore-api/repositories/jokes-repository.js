@@ -10,20 +10,24 @@ const getAllJokes = async () => {
 }
 
 const getJokeById = async (id) => {
-    const [results, metadata] = await dbConnection.query(`SELECT * FROM fora WHERE id = ?`, 
-                                                        {
-                                                            replacements: [id]
-                                                        });
+    const [results, metadata] = await dbConnection.query(
+        `SELECT * FROM fora WHERE id = ?`, 
+        {
+            replacements: [id]
+        }
+    );
     return results[0];
 }
 
 const insertJoke = async (joke) => {
-    const [results, metadata] = await dbConnection.query(`INSERT INTO 
-                                                          fora (question, answer, dateCreated, dateUpdated, userId)
-                                                          VALUES (?,?, now(), now(), ?)`,
-                                                          {
-                                                              replacements: [joke.question, joke.answer, joke.userId]
-                                                          });
+    const [results, metadata] = await dbConnection.query(
+        `INSERT INTO 
+        fora (question, answer, dateCreated, dateUpdated, userId)
+        VALUES (?,?, now(), now(), ?)`,
+        {
+            replacements: [joke.question, joke.answer, joke.userId]
+        }
+    );
     return results;
 }
 
