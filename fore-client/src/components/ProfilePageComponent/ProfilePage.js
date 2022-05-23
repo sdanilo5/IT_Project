@@ -15,7 +15,7 @@ const ProfilePage = (props) => {
                                         src="https://bootstrapious.com/i/snippets/sn-profile/teacher.jpg" 
                                         alt="..." 
                                         width="35%" 
-                                        class="rounded mb-2 mt-3 img-thumbnail" 
+                                        class="rounded mb-2 mt-4 img-thumbnail" 
                                     />
                                     <a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a>
                                 </div>
