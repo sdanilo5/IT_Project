@@ -17,9 +17,11 @@ import {
   Container,
 } from 'react-bootstrap';
 import SignUpModal from './components/SignUpModalComponent/SignUpModal';
+import LogInModal from './components/LogInModalComponent/LogInModal';
 
 function App() {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [signUpModalShow, setSignUpModalShow] = React.useState(false);
+  const [logInModalShow, setLogInModalShow] = React.useState(false);
 
   return (
     <div  className='body-div'>
@@ -36,8 +38,8 @@ function App() {
                 <Nav.Link href="/users">Users</Nav.Link>
               </Nav>
               <Nav >
-                <Nav.Link onClick={() => setModalShow(true)}>Sign up</Nav.Link>
-                <Nav.Link>Log in</Nav.Link>
+                <Nav.Link onClick={() => setSignUpModalShow(true)}>Sign up</Nav.Link>
+                <Nav.Link onClick={() => setLogInModalShow(true)}>Log in</Nav.Link>
                 {/* to show when user is logged in
                 <NavDropdown title="My Account" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="#">Action</NavDropdown.Item>
@@ -53,8 +55,13 @@ function App() {
           </Navbar>
         </header>
         <SignUpModal 
-          show={modalShow} 
-          onHide={() => setModalShow(false)}
+          show={signUpModalShow} 
+          onHide={() => setSignUpModalShow(false)}
+        />
+
+        <LogInModal 
+          show={logInModalShow} 
+          onHide={() => setLogInModalShow(false)}
         />
 
         <Routes>
