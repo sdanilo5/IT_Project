@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
-import img from './../../opasnost.jpg';
+import defaultImg from './../../images/users/default-user-image.jpg';
 
 const JokeDtailsModal = React.memo((props) => {
     const [comments, setComments] = React.useState([]);
@@ -14,7 +14,10 @@ const JokeDtailsModal = React.memo((props) => {
               console.log(response.data);
               let comms = response.data.map(comm => (
                 {
-                  userName: comm.name,
+                  user: {
+                    id: comm.userId,
+                    name: comm.name
+                  },
                   comment: {
                     id: comm.id,
                     text: comm.text,
@@ -80,6 +83,8 @@ const JokeDtailsModal = React.memo((props) => {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          animation
+          autoFocus
         >
             <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
@@ -98,11 +103,11 @@ const JokeDtailsModal = React.memo((props) => {
                               <div class="d-flex justify-content-between align-items-center">
                                 <div class="user d-flex flex-row align-items-center">
                                   <img 
-                                    src={img} 
+                                    src={typeof props.img === 'undefined' ? defaultImg : props.img}
                                     width="30" 
                                     class="user-img rounded-circle mr-2" 
                                   />
-                                  <span><small class="font-weight-bold text-primary"> {comment.userName} </small> 
+                                  <span><small class="font-weight-bold text-primary"> {comment.user.name} </small> 
                                   <small class="font-weight-bold">{comment.comment.text}</small></span>
                                 </div>
                                 <small></small>

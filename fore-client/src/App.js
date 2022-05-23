@@ -7,7 +7,6 @@ import Users from './components/UsersComponent/Users';
 import JokeDetails from './components/JokeDetailsComponent/JokeDetails';
 import {
           BrowserRouter as Router,
-          Link, 
           Routes, 
           Route
         } from 'react-router-dom';
@@ -17,15 +16,22 @@ import {
   NavDropdown, 
   Container,
 } from 'react-bootstrap';
+import SignUpModal from './components/SignUpModalComponent/SignUpModal';
 
 function App() {
+  const [modalShow, setModalShow] = React.useState(false);
+
+  const signUp = () => {
+    // signup functionallity
+  }
+
   return (
     <div  className='body-div'>
       <Router>
         <header style={{marginBottom: "30px"}}>
           <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" >
             <Container>
-            <Navbar.Brand href="#home">Fore Nocne More</Navbar.Brand>
+            <Navbar.Brand href="/">Fore Nocne More</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
@@ -33,7 +39,10 @@ function App() {
                 <Nav.Link href="/jokes">Jokes</Nav.Link>
                 <Nav.Link href="/users">Users</Nav.Link>
               </Nav>
-              <Nav>
+              <Nav >
+                <Nav.Link onClick={() => setModalShow(true)}>Sign up</Nav.Link>
+                <Nav.Link>Log in</Nav.Link>
+                {/* to show when user is logged in
                 <NavDropdown title="My Account" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="#">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#">Another action</NavDropdown.Item>
@@ -41,11 +50,16 @@ function App() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#">Log out</NavDropdown.Item>
                 </NavDropdown>
+                */}
               </Nav>
             </Navbar.Collapse>
             </Container>
           </Navbar>
         </header>
+        <SignUpModal 
+          show={modalShow} 
+          onHide={() => setModalShow(false)}
+        />
 
         <Routes>
           <Route exact path='/' element={<Home />} />
