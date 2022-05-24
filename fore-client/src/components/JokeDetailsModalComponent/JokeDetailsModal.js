@@ -90,7 +90,9 @@ const JokeDtailsModal = React.memo((props) => {
                         {props.user.name}
                     </Modal.Title>
             </Modal.Header>
-            <Modal.Body style={{backgroundColor: '#f7f6f6'}}>
+            <Modal.Body 
+              style={{backgroundColor: '#f7f6f6'}}
+            >
                     <h4>{props.question}</h4>
                     <h6>{props.answer}</h6>
                     <hr></hr>

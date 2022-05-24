@@ -16,6 +16,7 @@ app.use((req, res, next) => {
 const jokesRouting = require("./routing/jokes-routing");
 const usersRouting = require("./routing/users-routing");
 const commentsRouting = require("./routing/comments-routing");
+const loginRouting = require('./routing/login-routing');
 
 // DB connection import
 const dbConnection = require('./common/db-config');
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/jokes", jokesRouting);
 app.use("/users", usersRouting);
 app.use("/comments", commentsRouting);
+app.use('/login', loginRouting);
 
 app.listen(3000, () => {
     console.log("Server is listening at port 3000.");
