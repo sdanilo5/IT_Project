@@ -13,35 +13,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use((req, res, next) => {
-    // jwt validation
-    let token = req.headers['x-access-token'] || req.headers['authorization'] ;
-    if(token.startsWith('Bearer ')){
-        // makni bearera
-        token = token.slice(7, token.length);
-    }
-
-    if(token){
-        jwt.verify(token, config.secret, (err, decoded) => {
-            if (err) {
-              return res.json({
-                success: false,
-                message: 'Token is not valid'
-              });
-            } else {
-              req.decoded = decoded;
-              next();
-            }
-          });
-    }
-    else{
-        return res.send(400).json({
-            success: false,
-            message: 'Auth token is not supplied'
-        });
-    }
-});
-
 // routing imports
 const jokesRouting = require("./routing/jokes-routing");
 const usersRouting = require("./routing/users-routing");

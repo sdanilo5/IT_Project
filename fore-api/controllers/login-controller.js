@@ -15,7 +15,7 @@ const login = async (req, res) => {
         
         const token = jwt.sign(
                 toSend, 
-                'internettechnologiessecretkey', 
+                process.env.JWT_KEY, 
                 {expiresIn: '2h'}
             );
 
