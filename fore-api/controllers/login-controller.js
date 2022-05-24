@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
 const login = async (req, res) => {
+    // ne radi
     const user =  usersRepository.getUserByEmail(req.body.email);
     if(user === null){
         res.status(401).json({
