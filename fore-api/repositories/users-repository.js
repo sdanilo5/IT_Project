@@ -1,10 +1,24 @@
 const dbConnection = require('./../common/db-config');
 
+const getAllUserEmails = async () => {
+    const [results, metadata] = await dbConnection.query(`SELECT email FROM user`);
+    return results;
+}
+
 const getAllUsers = async () => {
     const [results, metadata] = await dbConnection.query(`SELECT * FROM user`);
     return results;
 }
 
+const getUserByEmail = async (email) => {
+    const [results, metadata] = await dbConnection.query(
+        `SELECT * FROM user WHERE email = ?`, 
+        {
+            replacements: [email]
+        }
+    );
+    return results[0];
+}
 
 const getUserById = async (id) => {
     const [results, metadata1] = await dbConnection.query(
@@ -61,8 +75,10 @@ const deleteUser = async (id) => {
 }
 
 module.exports = {
+    getAllUserEmails,
     getAllUsers,
     getUserById,
+    getUserByEmail,
     insertUser,
     updateUser,
     deleteUser

@@ -1,31 +1,33 @@
 const loginRepository = require('./../repositories/login-repository');
 const jwt = require('jsonwebtoken');
+const bcryptjs = require('bcryptjs');
 
 const login = async (req, res) => {
-    const user = await loginRepository.login(req.body);
-    
-    if(typeof user === 'undefined'){
-        res.send(403).json({
-            success: false,
-            message: 'Incorrect username or password'
-          });
+    const user =  usersRepository.getUserByEmail(req.body.email);
+    if(user === null){
+        res.status(401).json({
+            message: 'Invalid credentials!'
+        });
     }
     else{
-        const toSend = {userId: user[0].id, role: user[0].roleName};
-        
-        const token = jwt.sign(
-                toSend, 
-                process.env.JWT_KEY, 
-                {expiresIn: '2h'}
-            );
-
-        const response = {
-            success: true,
-            message: 'Authentication successful',
-            token: token
-        }
-
-        res.send(response);
+        bcryptjs.compare(req.body.password, user.password, (err, result) => {
+            if(result){
+                const token = jwt.sign({
+                    email: user.email,
+                    userId: user.id
+                }, process.env.JWT_KEY, (err, token) => {
+                        res.status(200).json({
+                            message: 'Authentication successful!',
+                            token: token
+                        });
+                    });
+            }
+            else{
+                res.status(401).json({
+                    message: 'Invalid credentials!'
+                });
+            }
+        });
     }
 }
 
