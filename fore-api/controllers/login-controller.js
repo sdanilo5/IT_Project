@@ -4,16 +4,16 @@ const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
 const login = async (req, res) => {
-    console.log(req.body);
     const user = await usersRepository.getUserByEmailAndPassword({
         email: req.body.email,
         password: req.body.password
     });
 
-    if(typeof user.id !== 'undefined'){
+    if(typeof user !== 'undefined'){
+
         let token = jwt.sign({
             id: user.id,
-            role: user.role
+            role: user.roleName
         }, process.env.JWT_KEY);
 
         res.send({token});

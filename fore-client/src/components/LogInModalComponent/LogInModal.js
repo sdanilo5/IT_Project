@@ -21,16 +21,18 @@ const LogInModal = (props) => {
 
     const logInBtnClick = () => {
         var userEmail = document.getElementById('email-su-input').value;
-        var userPassword = stringToHash(document.getElementById('password-su-input').value);
+        var userPassword = document.getElementById('password-su-input').value;
         
         const article = {
             email: userEmail,
             password: userPassword
         }
-
-        axios.post('http://localhost:3000/users/', article)
+        
+        axios.post('http://localhost:3000/login/', article)
             .then(response =>{
-                console.log('logged in passed. ', response);
+                let token = response.data.token;
+                sessionStorage.setItem('token', token);
+                window.location.replace(`http://localhost:3001/`);
             })
             .catch(err => console.log(err));
     }

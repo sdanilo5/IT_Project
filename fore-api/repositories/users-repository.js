@@ -11,15 +11,15 @@ const getAllUsers = async () => {
 }
 
 const getUserByEmailAndPassword = async (user) => {
-    const [r, m] = await dbConnection.query(
-        `SELECT u.id
-        FROM user u, user_role ur, role r
-        WHERE u.email = ? AND u.password = ? AND u.id = ur.userId AND r.id = ur.roleId`,
-        {
-            replacements: [user.email, user.password]
-        }
-    );
-    console.log(r);
+    // const [r, m] = await dbConnection.query(
+    //     `SELECT u.id
+    //     FROM user u
+    //     WHERE u.email = ? AND u.password = ?`,
+    //     {
+    //         replacements: [user.email, user.password]
+    //     }
+    // );
+    // console.log(r);
     const [results, metadata] = await dbConnection.query(
         `SELECT u.id, r.name AS roleName 
         FROM user u, user_role ur, role r
