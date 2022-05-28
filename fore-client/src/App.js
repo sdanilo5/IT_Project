@@ -18,10 +18,17 @@ import {
 } from 'react-bootstrap';
 import SignUpModal from './components/SignUpModalComponent/SignUpModal';
 import LogInModal from './components/LogInModalComponent/LogInModal';
+import jwt_decode from "jwt-decode";
 
 function App() {
   const [signUpModalShow, setSignUpModalShow] = React.useState(false);
   const [logInModalShow, setLogInModalShow] = React.useState(false);
+
+
+  const logOutClick = () => {
+    window.localStorage.removeItem('token');
+    window.sessionStorage.removeItem('token');
+  }
 
   return (
     <div  className='body-div'>
@@ -38,17 +45,21 @@ function App() {
                 <Nav.Link href="/users">Users</Nav.Link>
               </Nav>
               <Nav >
-                <Nav.Link onClick={() => setSignUpModalShow(true)}>Sign up</Nav.Link>
-                <Nav.Link onClick={() => setLogInModalShow(true)}>Log in</Nav.Link>
-                {/* to show when user is logged in
-                <NavDropdown title="My Account" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="#">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#">Another action</NavDropdown.Item>
-                  <NavDropdown.Item href="#">Something</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#">Log out</NavDropdown.Item>
-                </NavDropdown>
-                */}
+                {
+                  (sessionStorage.getItem('token')) ? 
+                    <NavDropdown title="My Account" id="collasible-nav-dropdown">
+                      <NavDropdown.Item href="#">Action</NavDropdown.Item>
+                      <NavDropdown.Item href="#">Another action</NavDropdown.Item>
+                      <NavDropdown.Item href="#">Something</NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="/" onClick={() => logOutClick()}>Log out</NavDropdown.Item>
+                    </NavDropdown>
+                    :
+                    <>
+                      <Nav.Link onClick={() => setSignUpModalShow(true)}>Sign up</Nav.Link>
+                      <Nav.Link onClick={() => setLogInModalShow(true)}>Log in</Nav.Link>
+                    </>
+                }
               </Nav>
             </Navbar.Collapse>
             </Container>
