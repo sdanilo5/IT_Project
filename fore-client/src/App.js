@@ -19,6 +19,7 @@ import {
 import SignUpModal from './components/SignUpModalComponent/SignUpModal';
 import LogInModal from './components/LogInModalComponent/LogInModal';
 import jwt_decode from "jwt-decode";
+import EditProfile from './components/EditProfileComponent/EditProfile';
 
 function App() {
   const [signUpModalShow, setSignUpModalShow] = React.useState(false);
@@ -50,7 +51,7 @@ function App() {
                     <NavDropdown title="My Account" id="collasible-nav-dropdown">
                       <NavDropdown.Item href="#">Action</NavDropdown.Item>
                       <NavDropdown.Item href="#">Another action</NavDropdown.Item>
-                      <NavDropdown.Item href="#">Something</NavDropdown.Item>
+                      <NavDropdown.Item href="/edit-profile">Settings</NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/" onClick={() => logOutClick()}>Log out</NavDropdown.Item>
                     </NavDropdown>
@@ -80,6 +81,7 @@ function App() {
           <Route exact path='/jokes' element={<Jokes />} />
           <Route exact path='/users' element={<Users />} />
           <Route exact path='/users/:id' element={<ProfilePage />} />
+          <Route exact path='/edit-profile' element={<EditProfile />} />
         </Routes>
       </Router>
     </div>
