@@ -2,13 +2,16 @@ import React from 'react';
 import {Modal, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
 import defaultImg from './../../images/users/default-user-image.jpg';
+import jwt_decode from "jwt-decode";
 
 const JokeDtailsModal = React.memo((props) => {
     const [comments, setComments] = React.useState([]);
-    const [comment, setComment] = React.useState('');
+    //const [comment, setComment] = React.useState('');
     const [update, setUpdate] = React.useState(false);
+    const [token, setToken] = React.useState('');
 
     React.useEffect(() => {
+        setToken(sessionStorage.getItem('token'));
         axios.get(`http://localhost:3000/comments/${props.id}`)
           .then(response => {
               let comms = response.data.map(comm => (
@@ -19,6 +22,7 @@ const JokeDtailsModal = React.memo((props) => {
                   },
                   comment: {
                     id: comm.id,
+                    userId: comm.userId,
                     text: comm.text,
                     dateCreated: `${comm.dateCreated}`.split('T')[0]
                   }
@@ -30,31 +34,38 @@ const JokeDtailsModal = React.memo((props) => {
     }, [update])
 
     const submitComment = () => {
+      const comment = document.getElementById('comment-input').value;
+      
       if(comment === ""){
         return;
       }
       
-      const article = {
-          "userId": 1,
-          "foraId": props.id,
-          "text": comment
-      };
+      if(token){
+        const article = {
+            "userId": jwt_decode(token).id,
+            "foraId": props.id,
+            "text": comment
+        };
 
-      axios.post('http://localhost:3000/comments/', article)
-        .then(response => {
-          console.log(response);
-          if(response.status === 200){
-            setUpdate(!update);
-            const commentInput = document.getElementById('comment-input');
-            commentInput.value = "";
+        axios.post('http://localhost:3000/comments/', article, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
         })
-        .catch(err => console.error(err));
-    }
+          .then(response => {
+            if(response.status === 200){
+              setUpdate(!update);
+              const commentInput = document.getElementById('comment-input');
+              commentInput.value = "";
+            }
+          })
+          .catch(err => console.error(err));
+      }
+      else{
+        console.log('You are not logged in');
+      }
 
-    const handleChange = (event) => {
-      setComment(event.target.value);
-    };
+    }
 
     const handleKeyPressed = (event) => {
       if(event.key === "Enter"){
@@ -64,16 +75,25 @@ const JokeDtailsModal = React.memo((props) => {
     }
 
     const removeComment = (id) => {
-      axios.delete(`http://localhost:3000/comments/${id}`)
-        .then(response => {
-          if(response.status === 200){
-            setUpdate(!update);
-          }
-          else{
-            console.log('ERROR CODE ', response.status);
+      if(token){
+        axios.delete(`http://localhost:3000/comments/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
         })
-        .catch(err => console.error(err));
+          .then(response => {
+            if(response.status === 200){
+              setUpdate(!update);
+            }
+            else{
+              console.log('ERROR CODE ', response.status);
+            }
+          })
+          .catch(err => console.error(err));
+      }
+      else{
+        console.log(err => console.error(err));
+      }
     }
 
     return (
@@ -115,7 +135,10 @@ const JokeDtailsModal = React.memo((props) => {
                               </div>
                               <div class="action d-flex justify-content-between mt-2 align-items-center">
                                 <div class="reply px-4">
-                                    <small onClick={() => removeComment(comment.comment.id)}>Remove</small>
+                                    {
+                                      comment.comment.userId === jwt_decode(token).id || jwt_decode(token).role === 'admin' ? 
+                                      <small onClick={() => removeComment(comment.comment.id)}>Remove</small> : <small></small>
+                                    }
                                 </div>
                                 <div class="icons align-items-center">
                                     <i class="fa fa-star text-warning"></i>
@@ -129,7 +152,7 @@ const JokeDtailsModal = React.memo((props) => {
                       }
                       <br></br>
                       <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Control id='comment-input' type="text" placeholder="Comment" onChange={handleChange} onKeyDown={handleKeyPressed}/>
+                        <Form.Control id='comment-input' type="text" placeholder="Comment" onKeyDown={handleKeyPressed}/>
                       </Form.Group>
                       <Button variant="primary" onClick={submitComment}>
                         Submit
