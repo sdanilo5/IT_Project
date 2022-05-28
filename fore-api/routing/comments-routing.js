@@ -4,6 +4,14 @@ const checkAuthMiddleware = require('./../middlewares/check-auth');
 
 const commentController = require('./../controllers/comments-controller');
 
+// const jwtMiddleware = require('express-jwt');
+
+// let auth = jwtMiddleware.expressjwt({
+//     secret: process.env.JWT_KEY,
+//     userProperty: 'body.userData',
+//     algorithms: ['HS256']
+// });
+
 router.route("/")
     .get(commentController.getAllComments)
     .post(checkAuthMiddleware.checkAuth, commentController.insertComment)

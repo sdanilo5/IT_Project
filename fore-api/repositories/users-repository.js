@@ -10,13 +10,25 @@ const getAllUsers = async () => {
     return results;
 }
 
-const getUserByEmail = async (email) => {
-    const [results, metadata] = await dbConnection.query(
-        `SELECT * FROM user WHERE email = ?`, 
+const getUserByEmailAndPassword = async (user) => {
+    const [r, m] = await dbConnection.query(
+        `SELECT u.id
+        FROM user u, user_role ur, role r
+        WHERE u.email = ? AND u.password = ? AND u.id = ur.userId AND r.id = ur.roleId`,
         {
-            replacements: [email]
+            replacements: [user.email, user.password]
         }
     );
+    console.log(r);
+    const [results, metadata] = await dbConnection.query(
+        `SELECT u.id, r.name AS roleName 
+        FROM user u, user_role ur, role r
+        WHERE u.email = ? AND u.password = ? AND u.id = ur.userId AND r.id = ur.roleId`,
+        {
+            replacements: [user.email, user.password]
+        }
+    );
+    
     return results[0];
 }
 
@@ -48,6 +60,18 @@ const insertUser = async (user) => {
             replacements: [user.name, user.email, user.password]
         }
     );
+
+    if(typeof results !== 'undefined'){
+        const [r1, m1] = await dbConnection.query(
+            `INSERT INTO 
+            user_role (dateCreated, dateUpdated, roleId, userId)
+            VALUES (now(), now(), 2, ?)`,
+            {
+                replacements: [results]
+            }
+        );
+    }
+
     return results;
 }
 
@@ -65,12 +89,25 @@ const updateUser = async (user, id) => {
 }
 
 const deleteUser = async (id) => {
+    const [results2, metadata2] = await dbConnection.query(
+        `DELETE FROM comment WHERE userId = ?`, 
+        {
+            replacements: [id]
+        }
+    );
+    const [results1, metadata1] = await dbConnection.query(
+        `DELETE FROM user_role WHERE userId = ?`, 
+        {
+            replacements: [id]
+        }
+    );
     const [results, metadata] = await dbConnection.query(
         `DELETE FROM user WHERE id = ?`, 
         {
             replacements: [id]
         }
     );
+    
     return results; 
 }
 
@@ -78,7 +115,7 @@ module.exports = {
     getAllUserEmails,
     getAllUsers,
     getUserById,
-    getUserByEmail,
+    getUserByEmailAndPassword,
     insertUser,
     updateUser,
     deleteUser
