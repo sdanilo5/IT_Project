@@ -18,10 +18,15 @@ const SingleJoke = React.memo((props) => {
                 className={variant.toLowerCase() === 'light' || variant.toLowerCase() === 'warning' ? `col-sm-2 col-md-4 col-lg-4 mb-5 btn-outline-dark` : `col-sm-2 col-md-4 col-lg-4 mb-5 btn-outline-light`}
                 onClick={() => setModalShow(true)}
                 >
-                <Card.Header>{props.user.name}</Card.Header>
-                <Card.Body>
-                    <Card.Title> {props.joke.question} </Card.Title>
-                    <Card.Text> {props.joke.answer} </Card.Text>
+                <Card.Header><strong>{props.user.name}</strong></Card.Header>
+                <Card.Body 
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
+                    }}>
+                    <Card.Title className={'text-center'}> {props.joke.question} </Card.Title>
+                    <Card.Text className={'text-center'}> {props.joke.answer} </Card.Text>
                 </Card.Body>
             </Card>
 

@@ -29,22 +29,26 @@ const Jokes = React.memo(() => {
     React.useEffect(() => {
         axios.get('http://localhost:3000/jokes')
             .then(response => {
-                const joke = {
-                    joke: {
-                        id: response.data[0].id,
-                        question: response.data[0].question,
-                        answer: response.data[0].answer,
-                        dateCreated: response.data[0].dateCreated,
-                        dateUpdated: response.data[0].dateUpdated
-                    },
-                    user: {
-                        id: response.data[0].userId,
-                        name: response.data[0].name
-                    }
-                };
+                let jokes = [];
+                for(let i = 0; i < response.data.length; i++){
+                    const joke = {
+                        joke: {
+                            id: response.data[i].id,
+                            question: response.data[i].question,
+                            answer: response.data[i].answer,
+                            dateCreated: response.data[i].dateCreated,
+                            dateUpdated: response.data[i].dateUpdated
+                        },
+                        user: {
+                            id: response.data[i].userId,
+                            name: response.data[i].name
+                        }
+                    };
+                    jokes.push(joke);
+                }
                 
                 setState({
-                    jokes: [joke, joke, joke, joke, joke, joke, joke]
+                    jokes: jokes
                 });
             })
             .catch(err => {
