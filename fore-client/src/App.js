@@ -49,8 +49,7 @@ function App() {
                 {
                   (sessionStorage.getItem('token')) ? 
                     <NavDropdown title="My Account" id="collasible-nav-dropdown">
-                      <NavDropdown.Item href="#">Action</NavDropdown.Item>
-                      <NavDropdown.Item href="#">Another action</NavDropdown.Item>
+                      <NavDropdown.Item href={`/users/${jwt_decode(sessionStorage.getItem('token')).id}`}>View Profile</NavDropdown.Item>
                       <NavDropdown.Item href="/edit-profile">Settings</NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/" onClick={() => logOutClick()}>Log out</NavDropdown.Item>
