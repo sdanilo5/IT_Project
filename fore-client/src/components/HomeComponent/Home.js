@@ -2,6 +2,7 @@ import React from 'react';
 import {Row, Col} from 'react-bootstrap';
 import SignUpModal from './../SignUpModalComponent/SignUpModal';
 import LogInModal from './../LogInModalComponent/LogInModal';
+import jwt_decode from "jwt-decode";
 
 function Home() {
     const [signUpModalShow, setSignUpModalShow] = React.useState(false);
@@ -10,7 +11,7 @@ function Home() {
     return (
         <>
             <h1 className='text-center text-light display-1'>Welcome</h1>
-            <h2 className='text-center text-light display-6'>to Fore Nocne More</h2>
+            <h2 className='text-center text-light display-6'>to Fore Noćne More</h2>
 
             <Row className='d-flex flex-wrap justify-content-center align-items-center mt-5'>
                 <Col 
@@ -18,13 +19,22 @@ function Home() {
                 >
                     <blockquote className="blockquote text-center">
                         <p className="mb-4 display-6">Did you ever wonder how do trees access the internet?</p>
-                        <h4 className='text-muted'>- They log in ;)</h4>
+                        <h4 className='text-muted mb-4'>- They log in ;)</h4>
+                        <small 
+                            className={
+                                    !window.sessionStorage.getItem('token') ? 'd-none' : 'text-muted' 
+                                }
+                            >
+                                So did you.
+                        </small>
                     </blockquote>
                 </Col>
 
                 <div className='w-100'></div>
-                <Col 
-                    className='d-block border rounded border-dark shadow p-5 m-5 bg-light' 
+                <Col className=
+                    {
+                        window.sessionStorage.getItem('token') ? 'd-none' : 'd-block border rounded border-dark shadow p-5 m-5 bg-light' 
+                    }
                 >
                     <blockquote className="blockquote text-center">
                         <p className='text-center h1'>Don't have account?</p>
@@ -35,8 +45,10 @@ function Home() {
                         <p className='text-center text-muted'>Make your first joke!</p>
                     </blockquote>
                 </Col>
-                <Col 
-                    className='d-block border rounded border-dark shadow p-5 m-5 bg-light'  
+                <Col className=
+                    {
+                        window.sessionStorage.getItem('token') ? 'd-none' : 'd-block border rounded border-dark shadow p-5 m-5 bg-light' 
+                    }
                 >
                     <blockquote className="blockquote text-center">
                         <p className='text-center h1'>Already have account?</p>
