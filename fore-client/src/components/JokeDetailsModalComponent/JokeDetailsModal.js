@@ -136,8 +136,11 @@ const JokeDtailsModal = React.memo((props) => {
                               <div class="action d-flex justify-content-between mt-2 align-items-center">
                                 <div class="reply px-4">
                                     {
-                                      comment.comment.userId === jwt_decode(token).id || jwt_decode(token).role === 'admin' ? 
-                                      <small onClick={() => removeComment(comment.comment.id)}>Remove</small> : <small></small>
+                                      token ? (
+                                        comment.comment.userId === jwt_decode(token).id || jwt_decode(token).role === 'admin' ? 
+                                        <small onClick={() => removeComment(comment.comment.id)}>Remove</small> : <small></small>
+                                      )
+                                      :  <small></small>
                                     }
                                 </div>
                                 <div class="icons align-items-center">
