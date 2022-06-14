@@ -70,10 +70,12 @@ const updateUser = async (user, id) => {
     const [results, metadata] = await dbConnection.query(
         `UPDATE user 
         SET name = ?,
+        email = ?,
+        password = ?,
         dateUpdated = now()
         WHERE id = ?`,
         {
-            replacements: [user.name, id]
+            replacements: [user.name, user.email, user.password, id]
         }
     );
     return results;

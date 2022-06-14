@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const checkAuthMiddleware = require('./../middlewares/check-auth');
 const usersController = require('./../controllers/users-controller');
 
 router.route("/")
@@ -9,7 +9,7 @@ router.route("/")
 
 router.route("/:id")
     .get(usersController.getUserById)
-    .put(usersController.updateUser)
-    .delete(usersController.deleteUser)
+    .put(checkAuthMiddleware.checkAuth, usersController.updateUser)
+    .delete(checkAuthMiddleware.checkAuth, usersController.deleteUser)
 
 module.exports = router;

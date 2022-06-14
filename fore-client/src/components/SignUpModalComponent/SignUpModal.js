@@ -34,12 +34,12 @@ const SignUpModal = (props) => {
 
         axios.post('http://localhost:3000/users/', article)
             .then(response =>{
-                const id = window.location.replace("http://localhost:3001/");
-                if(file[0].name !== ''){
-                    // sacuvaj file
-                    console.log(file); // radi
+                window.location.replace("http://localhost:3001/");
+                // if(file[0].name !== ''){
+                //     // sacuvaj file
+                //     console.log(file); // radi
                     
-                }
+                // }
             })
             .catch(err => console.log(err));
     }

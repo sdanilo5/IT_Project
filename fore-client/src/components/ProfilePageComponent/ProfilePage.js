@@ -62,14 +62,13 @@ const ProfilePage = (props) => {
                                         width="35%" 
                                         className="rounded mb-2 mt-4 img-thumbnail" 
                                     />
-                                    <a href="#" className="btn btn-dark btn-sm btn-block">Edit profile</a>
                                 </div>
                                 <div className="media-body mb-5 text-white">
                                     <h4 className="mt-0 mb-0">{user.name}</h4>
-                                    <p className="small mb-4"> 
+                                    {/* <p className="small mb-4"> 
                                         <i className="fa fa-map-marker mr-2"></i>
                                         San Farcisco
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                         </div>

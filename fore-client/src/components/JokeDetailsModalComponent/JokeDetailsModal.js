@@ -224,10 +224,10 @@ const JokeDtailsModal = React.memo((props) => {
                   <h1 className='text-center'>Edit Joke</h1>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <h5>Question</h5>
-                    <textarea class="form-control" id="edit-joke-question-textarea" rows="3">{props.question}</textarea>
+                    <textarea className="form-control" id="edit-joke-question-textarea" rows="3">{props.question}</textarea>
                     <br></br>
                     <h5>Answer</h5>
-                    <textarea class="form-control" id="edit-joke-answer-textarea" rows="3">{props.answer}</textarea>
+                    <textarea className="form-control" id="edit-joke-answer-textarea" rows="3">{props.answer}</textarea>
                   </Form.Group>
                   <div className='d-flex justify-content-center'>
                     <Button variant="primary" size="md" onClick={() => editFinished()}>Edit</Button>
