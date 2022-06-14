@@ -15,14 +15,13 @@ const InsertJokeModal = (props) => {
             answer: answer,
             userId: jwt_decode(token).id
         }
-        console.log(article);
+        
         axios.post('http://localhost:3000/jokes/', article , {
             headers: {
               Authorization: `Bearer ${token}`
             }
           })
             .then(response =>{
-                console.log(response.data);
                 window.location.replace(`http://localhost:3001/users/${jwt_decode(token).id}`);
             })
             .catch(err => {
