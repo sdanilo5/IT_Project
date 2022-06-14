@@ -23,7 +23,8 @@ const SignUpModal = (props) => {
     const signUpBtnClick = () => {
         var userName = document.getElementById('username-su-input').value;
         var userEmail = document.getElementById('email-su-input').value;
-        var userPassword = stringToHash(document.getElementById('password-su-input').value);
+        // var userPassword = stringToHash(document.getElementById('password-su-input').value);
+        var userPassword = (document.getElementById('password-su-input').value);
         
         const article = {
             name: userName,

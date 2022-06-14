@@ -30,11 +30,15 @@ const LogInModal = (props) => {
         
         axios.post('http://localhost:3000/login/', article)
             .then(response =>{
+                console.log(response);
                 let token = response.data.token;
                 sessionStorage.setItem('token', token);
                 window.location.replace(`http://localhost:3001/`);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                alert('Invalid email or password!');
+            });
     }
 
     return(
