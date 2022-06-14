@@ -6,7 +6,6 @@ import jwt_decode from "jwt-decode";
 
 const JokeDtailsModal = React.memo((props) => {
     const [comments, setComments] = React.useState([]);
-    //const [comment, setComment] = React.useState('');
     const [update, setUpdate] = React.useState(false);
     const [token, setToken] = React.useState('');
 
@@ -142,8 +141,15 @@ const JokeDtailsModal = React.memo((props) => {
     const deleteBtnClicked = () => {
       let confirmDelete = window.confirm("Are you sure to delete this joke?");
       if(confirmDelete){
-        // delete
-
+        axios.delete(`http://localhost:3000/jokes/${props.id}`,  {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then(response => {
+          window.location.replace(`http://localhost:3001/users/${props.user.id}`);
+        })
+        .catch(err => console.error(err));
       }
     }
 
@@ -230,10 +236,17 @@ const JokeDtailsModal = React.memo((props) => {
               </Modal.Body>
               <Modal.Footer>
                       <p className='me-auto'>{`${props.dateCreated}`.split('T')[0]}</p>
-                      <div>
-                        <a id='edit-joke-btn' className='btn btn-outline-primary mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => editBtnClicked()}>Edit</a>
-                        <a id='delete-joke-btn' className='btn btn-outline-danger ml-2' onClick={() => deleteBtnClicked()}>Delete</a>
-                      </div>
+                        {
+                          token && (jwt_decode(token).id === props.user.id) ? (
+                            <div>
+                              <a id='edit-joke-btn' className='btn btn-outline-primary mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => editBtnClicked()}>Edit</a>
+                              <a id='delete-joke-btn' className='btn btn-outline-danger ml-2' onClick={() => deleteBtnClicked()}>Delete</a>
+                            </div>
+                          ) : (
+                            token && jwt_decode(token).role === 'admin' ? <a id='delete-joke-btn' className='btn btn-outline-danger ml-2' onClick={() => deleteBtnClicked()}>Delete</a>
+                            : <></>
+                            )
+                        }
               </Modal.Footer>
           </Modal>
       );
