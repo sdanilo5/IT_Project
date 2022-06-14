@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import SingleJoke from '../SingleJokeComponent/SingleJoke';
+import InsertJokeModal from '../InsertJokeModalComponent/InsertJokeModal';
 import defaultImg from './../../images/users/default-user-image.jpg';
 import jwt_decode from "jwt-decode";
 
@@ -26,6 +27,7 @@ const ProfilePage = (props) => {
         name: "",
         jokes: [],
     });
+    const [insertJokeModalShow, setInsertJokeModalShow] = React.useState(false);
 
     React.useEffect(()=> {
         const url = window.location.href;
@@ -86,6 +88,7 @@ const ProfilePage = (props) => {
                                 <h5 class="mb-0">{user.name}'s Jokes</h5>
                                 <a 
                                     className={ !window.sessionStorage.getItem('token') || (jwt_decode(window.sessionStorage.getItem('token')).id != user.id) ? 'd-none' : 'btn btn-outline-primary'}
+                                    onClick={() => setInsertJokeModalShow(true)}
                                     >
                                         Insert Joke
                                 </a>
@@ -109,6 +112,10 @@ const ProfilePage = (props) => {
                     </div>
 
                 </div>
+                <InsertJokeModal 
+                    show={insertJokeModalShow} 
+                    onHide={() => setInsertJokeModalShow(false)}
+                />
             </div>
         </>
     )
