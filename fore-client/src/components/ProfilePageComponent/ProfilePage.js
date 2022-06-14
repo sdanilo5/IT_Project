@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import SingleJoke from '../SingleJokeComponent/SingleJoke';
 import defaultImg from './../../images/users/default-user-image.jpg';
+import jwt_decode from "jwt-decode";
 
 var variants = [
     'Success', 
@@ -72,6 +73,7 @@ const ProfilePage = (props) => {
                         </div>
 
                         <div class="bg-light p-4 d-flex justify-content-end text-center">
+                            
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
                                     <h5 class="font-weight-bold mb-0 d-block">{user.jokes.length}</h5><small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Jokes</small>
@@ -82,7 +84,13 @@ const ProfilePage = (props) => {
                         <div class="py-4 px-4">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <h5 class="mb-0">{user.name}'s Jokes</h5>
+                                <a 
+                                    className={ !window.sessionStorage.getItem('token') || (jwt_decode(window.sessionStorage.getItem('token')).id != user.id) ? 'd-none' : 'btn btn-outline-primary'}
+                                    >
+                                        Insert Joke
+                                </a>
                             </div>
+                            <hr/>
                             <div class="row flex-grid justify-content-center align-content-center">
                                 {
                                     user.jokes.map(joke => {
