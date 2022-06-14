@@ -11,15 +11,6 @@ const getAllUsers = async () => {
 }
 
 const getUserByEmailAndPassword = async (user) => {
-    // const [r, m] = await dbConnection.query(
-    //     `SELECT u.id
-    //     FROM user u
-    //     WHERE u.email = ? AND u.password = ?`,
-    //     {
-    //         replacements: [user.email, user.password]
-    //     }
-    // );
-    // console.log(r);
     const [results, metadata] = await dbConnection.query(
         `SELECT u.id, r.name AS roleName 
         FROM user u, user_role ur, role r
@@ -41,8 +32,8 @@ const getUserById = async (id) => {
     );
     const [userJokes, metadata2] = await dbConnection.query( 
         `SELECT id, question, answer, dateCreated, dateUpdated
-        FROM fora 
-        WHERE userId = ?`, 
+        FROM fora f
+        WHERE userId = ? AND f.isDeleted = 0`, 
         {
             replacements: [id]
         }
@@ -54,8 +45,8 @@ const getUserById = async (id) => {
 const insertUser = async (user) => {
     const [results, metadata] = await dbConnection.query(
         `INSERT INTO 
-        user (name, email, password, dateCreated, dateUpdated)
-        VALUES (?,?,?, now(), now())`,
+        user (name, email, password, dateCreated, dateUpdated, isDeleted)
+        VALUES (?,?,?, now(), now(), 0)`,
         {
             replacements: [user.name, user.email, user.password]
         }
@@ -90,19 +81,21 @@ const updateUser = async (user, id) => {
 
 const deleteUser = async (id) => {
     const [results2, metadata2] = await dbConnection.query(
-        `DELETE FROM comment WHERE userId = ?`, 
+        `UPDATE comment SET isDeleted = 1 WHERE userId = ?`,
+        // `DELETE FROM comment WHERE userId = ?`, 
         {
             replacements: [id]
         }
     );
-    const [results1, metadata1] = await dbConnection.query(
-        `DELETE FROM user_role WHERE userId = ?`, 
-        {
-            replacements: [id]
-        }
-    );
+    // const [results1, metadata1] = await dbConnection.query(
+    //     `DELETE FROM user_role WHERE userId = ?`, 
+    //     {
+    //         replacements: [id]
+    //     }
+    // );
     const [results, metadata] = await dbConnection.query(
-        `DELETE FROM user WHERE id = ?`, 
+        `UPDATE user SET isDeleted = 1 WHERE id = ?`,
+        // `DELETE FROM user WHERE id = ?`, 
         {
             replacements: [id]
         }
