@@ -96,9 +96,7 @@ const ProfilePage = (props) => {
                                 <div className="media-body mb-5 text-white">
                                     <h4 className="mt-0 mb-0">{user.name}</h4>
                                     {
-                                        sessionStorage.getItem('token') ? (
-                                            jwt_decode(sessionStorage.getItem('token')).role === 'admin' && 
-                                            jwt_decode(sessionStorage.getItem('token')).id !== user.id &&
+                                        sessionStorage.getItem('token') && jwt_decode(sessionStorage.getItem('token')).role === 'admin' && jwt_decode(sessionStorage.getItem('token')).id !== user.id ? (
                                             user.isDeleted === 0 ? (
                                                 <a className='btn btn-outline-danger w-100 mt-3' onClick={() => blockUserAction()}>Block User</a>
                                             ) : (
