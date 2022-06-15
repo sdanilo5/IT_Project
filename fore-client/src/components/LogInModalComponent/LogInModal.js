@@ -36,7 +36,7 @@ const LogInModal = (props) => {
                 window.location.replace(`http://localhost:3001/`);
             })
             .catch(err => {
-                console.log(err);
+                //console.log(err);
                 alert('Invalid email or password!');
             });
     }

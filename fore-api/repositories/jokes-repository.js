@@ -4,7 +4,7 @@ const getAllJokes = async () => {
     const [results, metadata] = await dbConnection.query(
         `SELECT f.id, f.question, f.answer, f.dateCreated, f.dateUpdated, f.userId, u.name
          FROM fora f, user u
-         WHERE f.userId = u.id AND f.isDeleted = 0`
+         WHERE f.userId = u.id AND f.isDeleted = 0 AND u.isDeleted = 0`
     );
     return results;
 }

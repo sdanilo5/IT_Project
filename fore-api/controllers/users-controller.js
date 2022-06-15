@@ -7,6 +7,11 @@ const getAllUsers = async (req, res) => {
     res.send(results);
 }
 
+const getAllBlocedUsers = async (req, res) => {
+    const results = await usersRepository.getAllBlockedUsers();
+    res.send(results);
+}
+
 const getUserById = async (req, res) => {
     const results = await usersRepository.getUserById(req.params.id);
     res.send(results);
@@ -53,10 +58,17 @@ const deleteUser = async (req, res) => {
     res.send(results);
 }
 
+const unblockUser = async (req, res) => {
+    const results = await usersRepository.unblockUser(req.body);
+    res.send(results);
+}
+
 module.exports = {
     getAllUsers,
+    getAllBlocedUsers,
     getUserById,
     insertUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    unblockUser,
 }

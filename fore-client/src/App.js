@@ -4,6 +4,7 @@ import './App.css';
 import Home from './components/HomeComponent/Home';
 import Jokes from './components/JokesComponent/Jokes';
 import Users from './components/UsersComponent/Users';
+import BlockedUsers from './components/BlockedUsersComponent/BlockedUsers';
 import ProfilePage from './components/ProfilePageComponent/ProfilePage';
 import {
           BrowserRouter as Router,
@@ -44,6 +45,10 @@ function App() {
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/jokes">Jokes</Nav.Link>
                 <Nav.Link href="/users">Users</Nav.Link>
+                {
+                  sessionStorage.getItem('token') && jwt_decode(sessionStorage.getItem('token')).role === 'admin' ? 
+                  <Nav.Link href="/blocked-users">Blocked Users</Nav.Link> : <></>
+                }
               </Nav>
               <Nav >
                 {
@@ -79,6 +84,7 @@ function App() {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/jokes' element={<Jokes />} />
           <Route exact path='/users' element={<Users />} />
+          <Route exact path='/blocked-users' element={<BlockedUsers />} />
           <Route exact path='/users/:id' element={<ProfilePage />} />
           <Route exact path='/edit-profile' element={<EditProfile />} />
         </Routes>

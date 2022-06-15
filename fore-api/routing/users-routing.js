@@ -7,6 +7,10 @@ router.route("/")
     .get(usersController.getAllUsers)
     .post(usersController.insertUser)
 
+router.route('/blocked')
+    .get(checkAuthMiddleware.checkAuth, usersController.getAllBlocedUsers)
+    .put(checkAuthMiddleware.checkAuth, usersController.unblockUser)
+
 router.route("/:id")
     .get(usersController.getUserById)
     .put(checkAuthMiddleware.checkAuth, usersController.updateUser)

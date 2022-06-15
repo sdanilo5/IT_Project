@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import {Container} from 'react-bootstrap'
 import SingleUser from '../SingleUserComponent/SingleUser';
 import jwt_decode from "jwt-decode";
 
-const Users = (props) => {
-    const [users1, setUsers1] = useState([]);
+const BlockedUsers = () => {
+    const [users1, setUsers1] = React.useState([]);
     const [token, setToken] = React.useState('');
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/users')
+    React.useEffect(() => {
+        setToken(sessionStorage.getItem('token'));
+        axios.get('http://localhost:3000/users/blocked', {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            }
+          })
             .then(response => {
-                setToken(sessionStorage.getItem('token'));
                 setUsers1(response.data);
             })
             .catch(err => {
@@ -21,7 +25,7 @@ const Users = (props) => {
 
     return(
         <>
-            <h1 className='text-center text-light'>Users Page</h1>
+            <h1 className='text-center text-light'>Blocked Users Page</h1>
             <Container className='card-container'>
                 {
                     users1.map(u => (
@@ -33,4 +37,4 @@ const Users = (props) => {
     )
 }
 
-export default Users;
+export default BlockedUsers;

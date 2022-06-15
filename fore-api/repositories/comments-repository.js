@@ -9,7 +9,7 @@ const getAllCommentsOfFora = async (id) => {
     const [results, metadata] = await dbConnection.query(
         `SELECT c.id, c.userId, c.foraId, c.text, c.dateCreated, u.name
         FROM comment c, user u
-        WHERE foraId = ? AND c.userId = u.id AND c.isDeleted = 0
+        WHERE foraId = ? AND c.userId = u.id AND c.isDeleted = 0 AND u.isDeleted = 0
         ORDER BY c.dateCreated`,
         {
             replacements: [id]

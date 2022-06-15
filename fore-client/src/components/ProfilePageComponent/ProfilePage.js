@@ -40,11 +40,41 @@ const ProfilePage = (props) => {
                     setUser({
                         id: data[0].id,
                         name: data[0].name,
+                        isDeleted: data[0].isDeleted,
                         jokes: data[1]
                     });
                 })
             .catch(err => console.error('Error: ', err));
     }, [])
+
+    const blockUserAction = () => {
+        const token = sessionStorage.getItem('token');
+        axios.delete(`http://localhost:3000/users/${user.id}`,{
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+            .then(response => {
+                alert('User has been blocked');
+                window.location.replace(`http://localhost:3001/users`);
+            })
+            .catch(err => console.error(err));
+    }
+
+    const unblockUserAction = () => {
+        const token = sessionStorage.getItem('token');
+        console.log(token);
+        axios.put(`http://localhost:3000/users/blocked`, user, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+            .then(response => {
+                alert('User has been unblocked');
+                window.location.replace(`http://localhost:3001/users`);
+            })
+            .catch(err => console.error(err));
+    }
 
     return (
         <>
@@ -53,7 +83,7 @@ const ProfilePage = (props) => {
 
                     <div className="bg-white shadow rounded overflow-hidden">
 
-                        <div className="px-4 pt-0 pb-4 bg-dark">
+                        <div className="px-4 pt-0 pb-2 bg-dark">
                             <div className="media align-items-end profile-header">
                                 <div className="profile mr-3">
                                     <img 
@@ -65,10 +95,17 @@ const ProfilePage = (props) => {
                                 </div>
                                 <div className="media-body mb-5 text-white">
                                     <h4 className="mt-0 mb-0">{user.name}</h4>
-                                    {/* <p className="small mb-4"> 
-                                        <i className="fa fa-map-marker mr-2"></i>
-                                        San Farcisco
-                                    </p> */}
+                                    {
+                                        sessionStorage.getItem('token') ? (
+                                            jwt_decode(sessionStorage.getItem('token')).role === 'admin' && 
+                                            jwt_decode(sessionStorage.getItem('token')).id !== user.id &&
+                                            user.isDeleted === 0 ? (
+                                                <a className='btn btn-outline-danger w-100 mt-3' onClick={() => blockUserAction()}>Block User</a>
+                                            ) : (
+                                                <a className='btn btn-outline-success w-100 mt-3' onClick={() => unblockUserAction()}>Unblock User</a>
+                                            )
+                                        ) : <></>
+                                    }
                                 </div>
                             </div>
                         </div>

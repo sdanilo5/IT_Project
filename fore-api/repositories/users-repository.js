@@ -6,7 +6,12 @@ const getAllUserEmails = async () => {
 }
 
 const getAllUsers = async () => {
-    const [results, metadata] = await dbConnection.query(`SELECT * FROM user`);
+    const [results, metadata] = await dbConnection.query(`SELECT * FROM user WHERE isDeleted = 0`);
+    return results;
+}
+
+const getAllBlockedUsers = async () => {
+    const [results, metadata] = await dbConnection.query(`SELECT * FROM user WHERE isDeleted = 1`);
     return results;
 }
 
@@ -82,13 +87,13 @@ const updateUser = async (user, id) => {
 }
 
 const deleteUser = async (id) => {
-    const [results2, metadata2] = await dbConnection.query(
-        `UPDATE comment SET isDeleted = 1 WHERE userId = ?`,
-        // `DELETE FROM comment WHERE userId = ?`, 
-        {
-            replacements: [id]
-        }
-    );
+    // const [results2, metadata2] = await dbConnection.query(
+    //     `UPDATE comment SET isDeleted = 1 WHERE userId = ?`,
+    //     // `DELETE FROM comment WHERE userId = ?`, 
+    //     {
+    //         replacements: [id]
+    //     }
+    // );
     // const [results1, metadata1] = await dbConnection.query(
     //     `DELETE FROM user_role WHERE userId = ?`, 
     //     {
@@ -106,12 +111,25 @@ const deleteUser = async (id) => {
     return results; 
 }
 
+const unblockUser = async (user) => {
+    const [results, metadata] = await dbConnection.query(
+        `UPDATE user SET isDeleted = 0 WHERE id = ?`,
+        {
+            replacements: [user.id]
+        }
+    );
+    
+    return results;
+}
+
 module.exports = {
     getAllUserEmails,
     getAllUsers,
+    getAllBlockedUsers,
     getUserById,
     getUserByEmailAndPassword,
     insertUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    unblockUser,
 }
