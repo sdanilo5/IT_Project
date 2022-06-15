@@ -144,10 +144,6 @@ const EditProfile = (props) => {
                                 </div>
                                
                                 <div className="row">
-                                    {/* <div>
-                                        <h5 className="mb-1">Profile Picture</h5>
-                                        <input type={'file'} />
-                                    </div> */}
                                     <div class="mb-3">
                                         <h5 className="mb-1">Profile Picture</h5>
                                         <input class="form-control" type="file" accept='image/*' id="profile-picture-input" />
