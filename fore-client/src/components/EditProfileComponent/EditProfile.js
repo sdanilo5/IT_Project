@@ -99,11 +99,13 @@ const EditProfile = (props) => {
                             <div className='card-header'>
 
                                 <div className="row justify-content-center">
-                                    <div className="col-lg-4 col-md-6 col-sm-8">
+                                    <div 
+                                        // className="col-lg-4 col-md-6 col-sm-8"
+                                        >
                                         <div className="card-body text-center">
                                             {
                                                 user.pictureName ? 
-                                                <img src={`${window.location.origin}/images/${user.pictureName}`} className="rounded-circle img-fluid"/> : 
+                                                <img src={`${window.location.origin}/images/${user.pictureName}`} className="rounded-circle img-fluid" style={{width: '18rem', height: '18rem'}}/> : 
                                                 <img src={defaultImg} className="rounded-circle img-fluid"/>
                                             }
                                         </div>

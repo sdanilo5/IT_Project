@@ -90,8 +90,7 @@ const ProfilePage = (props) => {
                                     <img 
                                     src={!user.pictureName ? defaultImg : `${window.location.origin}/images/${user.pictureName}`}
                                     alt="..." 
-                                    width="35%" 
-                                    // style={{overflow: 'hidden', maxHeight: '35%'}}
+                                    style={{width: '18rem', height: '18rem'}}
                                     className="rounded mb-2 mt-4 img-thumbnail" 
                                     />
                                 </div>
