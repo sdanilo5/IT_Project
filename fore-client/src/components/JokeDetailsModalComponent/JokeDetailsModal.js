@@ -17,7 +17,8 @@ const JokeDtailsModal = React.memo((props) => {
                 {
                   user: {
                     id: comm.userId,
-                    name: comm.name
+                    name: comm.name,
+                    pictureName: comm.pictureName
                   },
                   comment: {
                     id: comm.id,
@@ -182,7 +183,8 @@ const JokeDtailsModal = React.memo((props) => {
                                 <div class="d-flex justify-content-between align-items-center">
                                   <div class="user d-flex flex-row align-items-center">
                                     <img 
-                                      src={typeof props.img === 'undefined' ? defaultImg : props.img}
+                                      src={!comment.user.pictureName ? defaultImg : `${window.location.origin}/images/${comment.user.pictureName}`}
+                                      // src={typeof props.img === 'undefined' ? defaultImg : props.img}
                                       width="30" 
                                       class="user-img rounded-circle mr-2" 
                                     />

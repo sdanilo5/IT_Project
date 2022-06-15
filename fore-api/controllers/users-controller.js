@@ -1,6 +1,7 @@
 const usersRepository = require('./../repositories/users-repository');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
+const fs = require('fs');
 
 const getAllUsers = async (req, res) => {
     const results = await usersRepository.getAllUsers();
@@ -63,6 +64,51 @@ const unblockUser = async (req, res) => {
     res.send(results);
 }
 
+const uploadPicture = (req, res) => {
+    let file;
+    let uploadPath;
+
+    if(!req.files || Object.keys(req.files).length === 0){
+        return res.status(400).send('No files were uploaded.');
+    }
+    
+    file = req.files.image;
+    // uploadPath = __dirname + '/../../fore-client/src/images/users/' + file.name;
+    uploadPath = __dirname + '/../../fore-client/public/images/' + file.name;
+    
+    file.mv(uploadPath, function(err){
+        if(err)
+            return res.status(500).send(err);
+
+        res.send('File uploaded!');
+    });
+    // if (!fs.existsSync(uploadPath)) {
+    //     file.mv(uploadPath, function(err){
+    //         if(err)
+    //             return res.status(500).send(err);
+
+    //         res.send('File uploaded!');
+    //     });
+    // }
+
+    // fs.open(uploadPath, 'r', (err, fd) => {
+    //     if (err) {
+    //       if (err.code === 'ENOENT') {
+    //         // file does not exist
+    //         file.mv(uploadPath, function(err){
+    //             if(err)
+    //                 return res.status(500).send(err);
+
+    //             res.send('File uploaded!');
+    //         });
+    //       }
+    //       else{
+    //         console.log('file already exists!');
+    //       }
+    //     }
+    // });
+}
+
 module.exports = {
     getAllUsers,
     getAllBlocedUsers,
@@ -71,4 +117,5 @@ module.exports = {
     updateUser,
     deleteUser,
     unblockUser,
+    uploadPicture,
 }

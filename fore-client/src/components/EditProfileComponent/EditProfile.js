@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 
 const EditProfile = (props) => {
     const [user, setUser] = React.useState({});
+    const imgFolderPath = `./../../images/users`;
 
     React.useEffect(() => {
             const token = sessionStorage.getItem('token');
@@ -22,12 +23,15 @@ const EditProfile = (props) => {
         const email = document.getElementById('edit-email-textarea').value;
         const password = document.getElementById('edit-password-textarea').value;
         const confirmPassword = document.getElementById('edit-confirm-password-textarea').value;
+        const file = document.getElementById('profile-picture-input').files[0];
         const token = sessionStorage.getItem('token');
+        
         let newUserData = {
             id: user.id,
             name: user.name,
             email: user.email,
             password: user.password,
+            pictureName: user.pictureName
         };
 
         let hasChange = false;
@@ -51,6 +55,11 @@ const EditProfile = (props) => {
             return;
         }
 
+        if(file && file.name !== user.pictureName){
+            newUserData.pictureName = file.name;
+            hasChange = true;
+        }
+
         if(hasChange){
             axios.put(`http://localhost:3000/users/${user.id}`, newUserData, {
                 headers: {
@@ -58,7 +67,23 @@ const EditProfile = (props) => {
                 }
             })
                 .then(response => {
-                    window.location.replace(`http://localhost:3001/users/${user.id}`);
+                    if(file && file.name !== user.pictureName){
+                        var formData = new FormData();
+                        formData.append('image', file);
+                        
+                        axios.post(`http://localhost:3000/users/upload`, formData, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                                'Content-Type': file.type
+                            }
+                        })
+                            .then(response => {
+                                // console.log('all good');
+                                // console.log(response);
+                                window.location.replace(`http://localhost:3001/users/${user.id}`);
+                            })
+                            .catch(err => console.error(err));
+                    }
                 })
                 .catch(err => console.error(err));
         }
@@ -76,7 +101,11 @@ const EditProfile = (props) => {
                                 <div className="row justify-content-center">
                                     <div className="col-lg-4 col-md-6 col-sm-8">
                                         <div className="card-body text-center">
-                                            <img src={defaultImg} className="rounded-circle img-fluid"/>
+                                            {
+                                                user.pictureName ? 
+                                                <img src={`${window.location.origin}/images/${user.pictureName}`} className="rounded-circle img-fluid"/> : 
+                                                <img src={defaultImg} className="rounded-circle img-fluid"/>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -113,9 +142,13 @@ const EditProfile = (props) => {
                                 </div>
                                
                                 <div className="row">
-                                    <div>
+                                    {/* <div>
                                         <h5 className="mb-1">Profile Picture</h5>
                                         <input type={'file'} />
+                                    </div> */}
+                                    <div class="mb-3">
+                                        <h5 className="mb-1">Profile Picture</h5>
+                                        <input class="form-control" type="file" accept='image/*' id="profile-picture-input" />
                                     </div>
                                 </div>
 

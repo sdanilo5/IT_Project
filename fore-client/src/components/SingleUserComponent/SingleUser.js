@@ -17,7 +17,8 @@ const SingleUser = (props) => {
             <div className='' style={{display: 'table-row', zIndex: '1'}}>
                 <Image
                     style={{width: '9rem', height: '9rem', position: 'relative', margin: '2rem 2rem 0rem 2rem'}}
-                    src={typeof props.img === 'undefined' ? defaultImg : props.img}
+                    src={!props.user.pictureName ? defaultImg : `${window.location.origin}/images/${props.user.pictureName}`}
+                    // src={typeof props.img === 'undefined' ? defaultImg : props.img}
                     className='rounded-circle'
                 />
                 <hr style={{borderTop: '1px solid rgba(255, 255, 255)', marginBottom: '0'}}></hr>

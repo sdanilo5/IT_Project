@@ -2,7 +2,7 @@ const dbConnection = require('./../common/db-config');
 
 const getAllJokes = async () => {
     const [results, metadata] = await dbConnection.query(
-        `SELECT f.id, f.question, f.answer, f.dateCreated, f.dateUpdated, f.userId, u.name
+        `SELECT f.id, f.question, f.answer, f.dateCreated, f.dateUpdated, f.userId, u.name, u.pictureName
          FROM fora f, user u
          WHERE f.userId = u.id AND f.isDeleted = 0 AND u.isDeleted = 0`
     );

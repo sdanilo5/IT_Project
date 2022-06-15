@@ -40,6 +40,7 @@ const ProfilePage = (props) => {
                     setUser({
                         id: data[0].id,
                         name: data[0].name,
+                        pictureName: data[0].pictureName,
                         isDeleted: data[0].isDeleted,
                         jokes: data[1]
                     });
@@ -87,10 +88,11 @@ const ProfilePage = (props) => {
                             <div className="media align-items-end profile-header">
                                 <div className="profile mr-3">
                                     <img 
-                                        src={typeof props.img === 'undefined' ? defaultImg : props.img}
-                                        alt="..." 
-                                        width="35%" 
-                                        className="rounded mb-2 mt-4 img-thumbnail" 
+                                    src={!user.pictureName ? defaultImg : `${window.location.origin}/images/${user.pictureName}`}
+                                    alt="..." 
+                                    width="35%" 
+                                    // style={{overflow: 'hidden', maxHeight: '35%'}}
+                                    className="rounded mb-2 mt-4 img-thumbnail" 
                                     />
                                 </div>
                                 <div className="media-body mb-5 text-white">

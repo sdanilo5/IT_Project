@@ -41,7 +41,8 @@ const Jokes = React.memo(() => {
                         },
                         user: {
                             id: response.data[i].userId,
-                            name: response.data[i].name
+                            name: response.data[i].name,
+                            pictureName: response.data[i].pictureName
                         }
                     };
                     jokes.push(joke);

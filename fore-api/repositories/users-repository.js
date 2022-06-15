@@ -77,10 +77,11 @@ const updateUser = async (user, id) => {
         SET name = ?,
         email = ?,
         password = ?,
+        pictureName = ?,
         dateUpdated = now()
         WHERE id = ?`,
         {
-            replacements: [user.name, user.email, user.password, id]
+            replacements: [user.name, user.email, user.password, user.pictureName, id]
         }
     );
     return results;

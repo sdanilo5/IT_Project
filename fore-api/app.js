@@ -1,6 +1,7 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const jwt = require('jsonwebtoken');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use((req, res, next) => {
 
     next();
 });
+
+app.use(fileUpload());
 
 // routing imports
 const jokesRouting = require("./routing/jokes-routing");
