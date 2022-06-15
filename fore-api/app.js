@@ -21,6 +21,7 @@ const jokesRouting = require("./routing/jokes-routing");
 const usersRouting = require("./routing/users-routing");
 const commentsRouting = require("./routing/comments-routing");
 const loginRouting = require('./routing/login-routing');
+const notificationRouting = require('./routing/notification-routing');
 
 // DB connection import
 const dbConnection = require('./common/db-config');
@@ -31,6 +32,7 @@ app.use("/jokes", jokesRouting);
 app.use("/users", usersRouting);
 app.use("/comments", commentsRouting);
 app.use('/login', loginRouting);
+app.use('/notifications', notificationRouting);
 
 app.listen(3000, () => {
     console.log("Server is listening at port 3000.");
