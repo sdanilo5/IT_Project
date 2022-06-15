@@ -61,7 +61,7 @@ const JokeDtailsModal = React.memo((props) => {
           .catch(err => console.error(err));
       }
       else{
-        console.log('You are not logged in');
+        alert('You must be logged in to submit comments!');
       }
 
     }
