@@ -6,7 +6,6 @@ import jwt_decode from "jwt-decode";
 
 const EditProfile = (props) => {
     const [user, setUser] = React.useState({});
-    const imgFolderPath = `./../../images/users`;
 
     React.useEffect(() => {
             const token = sessionStorage.getItem('token');
@@ -99,9 +98,7 @@ const EditProfile = (props) => {
                             <div className='card-header'>
 
                                 <div className="row justify-content-center">
-                                    <div 
-                                        // className="col-lg-4 col-md-6 col-sm-8"
-                                        >
+                                    <div>
                                         <div className="card-body text-center">
                                             {
                                                 user.pictureName ? 
