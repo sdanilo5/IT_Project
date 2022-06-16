@@ -6,6 +6,7 @@ import Jokes from './components/JokesComponent/Jokes';
 import Users from './components/UsersComponent/Users';
 import BlockedUsers from './components/BlockedUsersComponent/BlockedUsers';
 import ProfilePage from './components/ProfilePageComponent/ProfilePage';
+import Notification from './components/NotificationComponent/Notification';
 import {
           BrowserRouter as Router,
           Routes, 
@@ -16,20 +17,34 @@ import {
   Nav, 
   NavDropdown, 
   Container,
+  Dropdown,
 } from 'react-bootstrap';
 import SignUpModal from './components/SignUpModalComponent/SignUpModal';
 import LogInModal from './components/LogInModalComponent/LogInModal';
 import jwt_decode from "jwt-decode";
 import EditProfile from './components/EditProfileComponent/EditProfile';
+import axios from 'axios';
 
 function App() {
   const [signUpModalShow, setSignUpModalShow] = React.useState(false);
   const [logInModalShow, setLogInModalShow] = React.useState(false);
-
+  const [userNotifications, setUserNotifications] = React.useState([])
 
   const logOutClick = () => {
     window.localStorage.removeItem('token');
     window.sessionStorage.removeItem('token');
+  }
+
+  const getNotifications = () => {
+    const token = sessionStorage.getItem('token');
+    const userId = jwt_decode(token).id;
+
+    axios.get(`http://localhost:3000/notifications/${userId}`)
+      .then(response => {
+        // console.log(response.data);
+        setUserNotifications(response.data);
+      })
+      .catch(err => console.error(err));
   }
 
   return (
@@ -37,7 +52,7 @@ function App() {
       <Router>
         <header style={{marginBottom: "30px"}}>
           <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" >
-            <Container>
+            <Container>(
             <Navbar.Brand href="/">Fore Noćne More</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -53,12 +68,31 @@ function App() {
               <Nav >
                 {
                   (sessionStorage.getItem('token')) ? 
-                    <NavDropdown title="My Account" id="collasible-nav-dropdown">
-                      <NavDropdown.Item href={`/users/${jwt_decode(sessionStorage.getItem('token')).id}`}>View Profile</NavDropdown.Item>
-                      <NavDropdown.Item href="/edit-profile">Settings</NavDropdown.Item>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="/" onClick={() => logOutClick()}>Log out</NavDropdown.Item>
-                    </NavDropdown>
+                    (
+                      <>
+                        <NavDropdown title='Notifications' drop='start' onClick={() => getNotifications()}>
+                          <Dropdown.Header>
+                            {
+                              userNotifications.length === 0 ? 'No notifications yet.' : 'Notifications'
+                            }
+                          </Dropdown.Header>
+                          {  
+                            userNotifications.map(not => (
+                              <Dropdown.Item>
+                                <Notification notification={not}/>
+                              </Dropdown.Item>
+                            ))
+                          }
+                        </NavDropdown>
+                        
+                        <NavDropdown title="My Account" id="collasible-nav-dropdown">
+                          <NavDropdown.Item href={`/users/${jwt_decode(sessionStorage.getItem('token')).id}`}>View Profile</NavDropdown.Item>
+                          <NavDropdown.Item href="/edit-profile">Settings</NavDropdown.Item>
+                          <NavDropdown.Divider />
+                          <NavDropdown.Item href="/" onClick={() => logOutClick()}>Log out</NavDropdown.Item>
+                        </NavDropdown>
+                      </>
+                    )
                     :
                     <>
                       <Nav.Link onClick={() => setSignUpModalShow(true)}>Sign up</Nav.Link>

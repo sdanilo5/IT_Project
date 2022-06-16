@@ -10,10 +10,14 @@ const getAllNotifications = async () => {
 
 const getAllNotificationsByReceiverId = async (id) => {
     const [results, metadata] = await dbConnection.query(
-        `SELECT n.id, n.senderId, n.receiverId, n.description, n.foraId, n.dateCreated
+        `SELECT n.id, n.senderId, n.receiverId, n.description, n.foraId, n.dateCreated, u.name, u.pictureName
          FROM notification n, user u
-         WHERE n.receiverId = u.id AND u.isDeleted = 0`
+         WHERE n.receiverId = ? AND u.id = n.senderId AND u.isDeleted = 0`,
+         {
+            replacements: [id]
+         }
     );
+    
     return results;
 }
 

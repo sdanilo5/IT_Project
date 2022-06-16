@@ -7,7 +7,7 @@ const getAllNotifications = async (req, res) => {
 }
 
 const getAllNotificationsByReceiverId = async (req, res) => {
-    const results = await notificationRepository.getAllNotificationsByReceiverId();
+    const results = await notificationRepository.getAllNotificationsByReceiverId(req.params.id);
     res.send(results);
 }
 
