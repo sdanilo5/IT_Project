@@ -7,7 +7,7 @@ import JokeDetailsModal from './../JokeDetailsModalComponent/JokeDetailsModal';
 const Notification = (props) => {
     const [modalShow, setModalShow] = React.useState(false);
     const [joke, setJoke] = React.useState({});
-    const [user, setUser] = React.useState({});
+    const [user, setUser] = React.useState({}); // receiver
 
     React.useEffect(() => {
         axios.get(`http://localhost:3000/jokes/${props.notification.foraId}`)

@@ -60,6 +60,24 @@ const JokeDtailsModal = React.memo((props) => {
             }
           })
           .catch(err => console.error(err));
+
+        // send notification
+        const notification={
+          senderId: jwt_decode(token).id,
+          receiverId: props.user.id,
+          description: `Commented your joke`,
+          foraId: props.id,
+        };
+
+        axios.post('http://localhost:3000/notifications', notification, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => console.error(err));
       }
       else{
         alert('You must be logged in to submit comments!');
