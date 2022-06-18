@@ -41,7 +41,6 @@ function App() {
 
     axios.get(`http://localhost:3000/notifications/${userId}`)
       .then(response => {
-        // console.log(response.data);
         setUserNotifications(response.data);
       })
       .catch(err => console.error(err));
@@ -78,9 +77,7 @@ function App() {
                           </Dropdown.Header>
                           {  
                             userNotifications.map(not => (
-                              <Dropdown.Item>
-                                <Notification notification={not}/>
-                              </Dropdown.Item>
+                              <Notification notification={not} />
                             ))
                           }
                         </NavDropdown>
