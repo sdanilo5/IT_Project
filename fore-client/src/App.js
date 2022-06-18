@@ -24,11 +24,24 @@ import LogInModal from './components/LogInModalComponent/LogInModal';
 import jwt_decode from "jwt-decode";
 import EditProfile from './components/EditProfileComponent/EditProfile';
 import axios from 'axios';
+import defaultImg from './images/users/default-user-image.jpg';
 
 function App() {
   const [signUpModalShow, setSignUpModalShow] = React.useState(false);
   const [logInModalShow, setLogInModalShow] = React.useState(false);
-  const [userNotifications, setUserNotifications] = React.useState([])
+  const [userNotifications, setUserNotifications] = React.useState([]);
+  const [user, setUser] = React.useState({});
+
+  React.useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    const userId = jwt_decode(token).id;
+
+    axios.get(`http://localhost:3000/users/${userId}`)
+        .then(response => {
+          setUser(response.data[0]);
+        })
+        .catch(err => console.error(err));
+  }, [])
 
   const logOutClick = () => {
     window.localStorage.removeItem('token');
@@ -82,7 +95,10 @@ function App() {
                           }
                         </NavDropdown>
                         
-                        <NavDropdown title="My Account" id="collasible-nav-dropdown">
+                        <NavDropdown 
+                          title={user.name} 
+                          id="collasible-nav-dropdown"
+                          >
                           <NavDropdown.Item href={`/users/${jwt_decode(sessionStorage.getItem('token')).id}`}>View Profile</NavDropdown.Item>
                           <NavDropdown.Item href="/edit-profile">Settings</NavDropdown.Item>
                           <NavDropdown.Divider />
