@@ -18,10 +18,9 @@ const Notification = (props) => {
 
         axios.get(`http://localhost:3000/users/${props.notification.receiverId}`)
             .then(response => {
-                setUser(response.data);
+                setUser(response.data[0]);
             })
             .catch(err => console.error(err));
-
     }, [])
 
     return (
@@ -45,7 +44,7 @@ const Notification = (props) => {
             </Dropdown.Item>
 
             <JokeDetailsModal
-                id={joke.id} 
+                id={props.notification.foraId} 
                 question={joke.question} 
                 answer={joke.answer} 
                 dateCreated={joke.dateCreated}

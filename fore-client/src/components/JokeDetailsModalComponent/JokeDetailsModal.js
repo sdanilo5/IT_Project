@@ -11,24 +11,25 @@ const JokeDtailsModal = React.memo((props) => {
 
     React.useEffect(() => {
         setToken(sessionStorage.getItem('token'));
+        
         axios.get(`http://localhost:3000/comments/${props.id}`)
           .then(response => {
-              let comms = response.data.map(comm => (
-                {
-                  user: {
-                    id: comm.userId,
-                    name: comm.name,
-                    pictureName: comm.pictureName
-                  },
-                  comment: {
-                    id: comm.id,
-                    userId: comm.userId,
-                    text: comm.text,
-                    dateCreated: `${comm.dateCreated}`.split('T')[0]
-                  }
-                }
-              ))
-              setComments([...comms]);
+              let comms = response.data.map(comm => {
+                return {
+                        user: {
+                          id: comm.userId,
+                          name: comm.name,
+                          pictureName: comm.pictureName
+                        },
+                        comment: {
+                          id: comm.id,
+                          userId: comm.userId,
+                          text: comm.text,
+                          dateCreated: `${comm.dateCreated}`.split('T')[0]
+                        }
+                      }
+            });
+            setComments([...comms]);
           })
           .catch(err => console.error("Error: ", err));
     }, [update])
