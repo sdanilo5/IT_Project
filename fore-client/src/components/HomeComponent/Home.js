@@ -39,10 +39,10 @@ function Home() {
                     >
                         <blockquote className="blockquote text-center">
                             <p className='text-center h1'>Don't have account?</p>
-                            <btn 
+                            <button 
                                 className='btn btn-outline-success btn-lg m-2' 
                                 onClick={() => setSignUpModalShow(true)}
-                            >Sign Up</btn>
+                            >Sign Up</button>
                             <p className='text-center text-muted'>Make your first joke!</p>
                         </blockquote>
                     </Col>
@@ -53,10 +53,10 @@ function Home() {
                     >
                         <blockquote className="blockquote text-center">
                             <p className='text-center h1'>Already have account?</p>
-                            <btn 
+                            <button 
                                 className='btn btn-outline-primary btn-lg m-2'
                                 onClick={() => setLogInModalShow(true)}
-                            >Log In</btn>
+                            >Log In</button>
                             <p className='text-center text-muted'>Be the first one to make joke today!</p>
                         </blockquote>
                     </Col>
