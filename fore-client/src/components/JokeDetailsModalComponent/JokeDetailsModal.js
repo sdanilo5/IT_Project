@@ -36,25 +36,6 @@ const JokeDtailsModal = React.memo((props) => {
         
     }, [update])
 
-    const helper = async () => {
-      await axios.get(`http://localhost:3000/favourite-jokes/${props.user.id}`)
-          .then(response => {
-                  const data = response.data;
-                  console.log(data);
-                  if(data.length > 0){
-                      for(let i = 0; i < data.length; i++){
-                        console.log(props.id + ' === ' + data[i].id + ' => ' + (props.id === data[i].id))
-                        if(props.id === data[i].id){
-                          console.log(data[i].question)
-                          setInFavourites(true);
-                          break;
-                        }
-                      }
-                  }
-              })
-          .catch(err => console.error('Error: ', err));
-    }
-
     const submitComment = () => {
       const comment = document.getElementById('comment-input').value;
       
@@ -90,16 +71,18 @@ const JokeDtailsModal = React.memo((props) => {
           description: `Commented your joke`,
           foraId: props.id,
         };
-
-        axios.post('http://localhost:3000/notifications', notification, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-          .then(response => {
-            // console.log(response);
+        
+        if(notification.senderId !== notification.receiverId){
+          axios.post('http://localhost:3000/notifications', notification, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           })
-          .catch(err => console.error(err));
+            .then(response => {
+              // console.log(response);
+            })
+            .catch(err => console.error(err));
+        }
       }
       else{
         alert('You must be logged in to submit comments!');
