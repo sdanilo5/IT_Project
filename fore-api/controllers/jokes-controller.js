@@ -1,4 +1,3 @@
-const dbConnection = require('./../common/db-config');
 const jokesRepository = require('./../repositories/jokes-repository');
 
 const getAllJokes = async (req, res) => {
