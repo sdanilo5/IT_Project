@@ -115,14 +115,14 @@ const EditProfile = (props) => {
                                 <div className="row">
                                     <div>
                                         <h5 className="mb-1">Username</h5>
-                                        <input id='edit-username-textarea' type='text' className="form-control container-fluid mb-3" />
+                                        <input id='edit-username-textarea' type='text' className="form-control container-fluid mb-3" placeholder={user.name}/>
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div>
                                         <h5 className="mb-1">Email</h5>
-                                        <input id='edit-email-textarea' type='email' className="form-control container-fluid mb-3" />
+                                        <input id='edit-email-textarea' type='email' className="form-control container-fluid mb-3" placeholder={user.email}/>
                                     </div>
                                 </div>
                                 
