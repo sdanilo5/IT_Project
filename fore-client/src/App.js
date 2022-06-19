@@ -91,7 +91,7 @@ function App() {
                           </Dropdown.Header>
                           {  
                             userNotifications.map(not => (
-                              <Notification notification={not} />
+                              <Notification notification={not} key={`notification-${not.id}`} />
                             ))
                           }
                         </NavDropdown>

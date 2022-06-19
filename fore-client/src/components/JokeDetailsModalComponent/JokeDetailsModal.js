@@ -9,6 +9,7 @@ const JokeDtailsModal = React.memo((props) => {
     const [update, setUpdate] = React.useState(false);
     const [token, setToken] = React.useState('');
     const [inFavourites, setInFavourites] = React.useState(props.favourites);
+    var broj = 0;
 
     React.useEffect(() => {
         setToken(sessionStorage.getItem('token'));
@@ -211,8 +212,13 @@ const JokeDtailsModal = React.memo((props) => {
         .catch(err => console.error(err));
     }
 
+    const incrementKey = () => {
+      return broj++;
+    }
+
     return (
           <Modal
+            key={`joke-details-modal-${props.id}`}
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
@@ -236,21 +242,21 @@ const JokeDtailsModal = React.memo((props) => {
                         {
                           comments?.map(comment => {
                             return (
-                                <div class="comment-card p-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  <div class="user d-flex flex-row align-items-center">
+                                <div className="comment-card p-3" key={`comment-${incrementKey()}`}>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div className="user d-flex flex-row align-items-center">
                                     <img 
                                       src={!comment.user.pictureName ? defaultImg : `${window.location.origin}/images/${comment.user.pictureName}`}
                                       width="30" 
-                                      class="user-img rounded-circle mr-2" 
+                                      className="user-img rounded-circle mr-2" 
                                     />
-                                    <span><small class="font-weight-bold text-primary"> {comment.user.name} </small> 
-                                    <small class="font-weight-bold">{comment.comment.text}</small></span>
+                                    <span><small className="font-weight-bold text-primary"> {comment.user.name} </small> 
+                                    <small className="font-weight-bold">{comment.comment.text}</small></span>
                                   </div>
                                   <small></small>
                                 </div>
-                                <div class="action d-flex justify-content-between mt-2 align-items-center">
-                                  <div class="reply px-4">
+                                <div className="action d-flex justify-content-between mt-2 align-items-center">
+                                  <div className="reply px-4">
                                       {
                                         token ? (
                                           comment.comment.userId === jwt_decode(token).id || jwt_decode(token).role === 'admin' ? 
@@ -259,9 +265,9 @@ const JokeDtailsModal = React.memo((props) => {
                                         :  <small></small>
                                       }
                                   </div>
-                                  <div class="icons align-items-center">
-                                      <i class="fa fa-star text-warning"></i>
-                                      <i class="fa fa-check-circle-o check-icon"></i>
+                                  <div className="icons align-items-center">
+                                      <i className="fa fa-star text-warning"></i>
+                                      <i className="fa fa-check-circle-o check-icon"></i>
                                       <small style={{color: '#b7b4b4'}}>{comment.comment.dateCreated}</small>
                                   </div>
                                 </div>
@@ -270,7 +276,7 @@ const JokeDtailsModal = React.memo((props) => {
                           })
                         }
                         <br></br>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Group className="mb-3">
                           <Form.Control id='comment-input' type="text" placeholder="Comment" onKeyDown={handleKeyPressed}/>
                         </Form.Group>
                         <Button variant="primary" onClick={submitComment}>
@@ -282,10 +288,10 @@ const JokeDtailsModal = React.memo((props) => {
                   <h1 className='text-center'>Edit Joke</h1>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <h5>Question</h5>
-                    <textarea className="form-control" id="edit-joke-question-textarea" rows="3">{props.question}</textarea>
+                    <textarea className="form-control" id="edit-joke-question-textarea" rows="3" placeholder={props.question} />
                     <br></br>
                     <h5>Answer</h5>
-                    <textarea className="form-control" id="edit-joke-answer-textarea" rows="3">{props.answer}</textarea>
+                    <textarea className="form-control" id="edit-joke-answer-textarea" rows="3" placeholder={props.answer} />
                   </Form.Group>
                   <div className='d-flex justify-content-center'>
                     <Button variant="primary" size="md" onClick={() => editFinished()}>Edit</Button>

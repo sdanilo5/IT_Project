@@ -196,7 +196,8 @@ const ProfilePage = (props) => {
                                 {
                                     showFavourites ? (
                                         favourites.jokes.map(joke => {
-                                            return <div className="col d-flex justify-content-center align-content-center">
+                                            return (
+                                                <div className="col d-flex justify-content-center align-content-center" key={`profile-joke1-${joke.id}`}>
                                                     <SingleJoke
                                                         joke={{
                                                             id: joke.id,
@@ -209,11 +210,12 @@ const ProfilePage = (props) => {
                                                         variant = {variants[incrementInd()]}
                                                         favourites = {true}
                                                     />
-                                                    </div>
+                                                </div>
+                                            )
                                         })
                                     ) : (
                                         user.jokes.map(joke => {
-                                            return <div className="col d-flex justify-content-center align-content-center">
+                                            return <div className="col d-flex justify-content-center align-content-center" key={`profile-joke2-${joke.id}`}>
                                                         <SingleJoke
                                                             joke={joke}
                                                             user={{id: user.id, name: user.name}}

@@ -18,7 +18,6 @@ const Users = (props) => {
                 console.error("Error: ", err);
             })
     }, [])
-
     
     const isInputEmpty = () => {
         setTimeout(()=> {
@@ -26,7 +25,6 @@ const Users = (props) => {
             if(!searchWords){
                 searchUsers();
             }
-            console.log('bri');
         }, 1000)
     }
 
@@ -80,7 +78,10 @@ const Users = (props) => {
             <Container className='card-container'>
                 {
                     users1.map(u => (
-                        !token || (token && jwt_decode(token).id !== u.id) ? <SingleUser user={u}/> : <></>
+                        !token || (token && jwt_decode(token).id !== u.id) ? 
+                            <SingleUser user={u} key={`user-${u.id}`}/> 
+                            : 
+                            <></>
                     ))
                 }
             </Container>

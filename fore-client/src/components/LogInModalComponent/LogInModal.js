@@ -48,7 +48,7 @@ const LogInModal = (props) => {
                 <h1>Log In</h1>
             </Modal.Header>
             <Modal.Body>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3">
                         <h5>Email</h5>
                         <Form.Control id='email-lg-input' type="email" placeholder="Email"/>
                         <br></br>

@@ -138,7 +138,7 @@ const Jokes = React.memo(() => {
                     state.jokes?.map((joke)=> {
                         return (
                                 <SingleJoke 
-                                    key={joke.joke.id} 
+                                    key={`joke-${joke.joke.id}`}
                                     joke={joke.joke}
                                     user={joke.user}
                                     variant = {variants[incrementInd()]}

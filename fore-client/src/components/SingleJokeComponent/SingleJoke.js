@@ -10,7 +10,7 @@ const SingleJoke = React.memo((props) => {
         <>
             <Card
                 bg={variant.toLowerCase()}
-                key={variant}
+                key={`joke-card-${props.joke.id}`}
                 text={variant.toLowerCase() === 'light' || variant.toLowerCase() === 'warning' ? 'dark' : 'white'}
                 style={{ width: '18rem', cursor:'pointer' }}
                 className={variant.toLowerCase() === 'light' || variant.toLowerCase() === 'warning' ? `col-sm-2 col-md-4 col-lg-4 mb-5 btn-outline-dark` : `col-sm-2 col-md-4 col-lg-4 mb-5 btn-outline-light`}
@@ -29,6 +29,7 @@ const SingleJoke = React.memo((props) => {
             </Card>
 
             <JokeDetailsModal
+                key={`joke-modal-${props.joke.id}`}
                 id={props.joke.id} 
                 question={props.joke.question} 
                 answer={props.joke.answer} 

@@ -65,7 +65,7 @@ const SignUpModal = (props) => {
                 <h1>Sign Up</h1>
             </Modal.Header>
             <Modal.Body>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3">
                         <h5>Username</h5>
                         <Form.Control id='username-su-input' type="text" placeholder="Username"/>
                         <br></br>

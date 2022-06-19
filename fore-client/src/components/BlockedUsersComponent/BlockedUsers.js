@@ -29,7 +29,7 @@ const BlockedUsers = () => {
             <Container className='card-container'>
                 {
                     users1.map(u => (
-                        !token || (token && jwt_decode(token).id !== u.id) ? <SingleUser user={u}/> : <></>
+                        !token || (token && jwt_decode(token).id !== u.id) ? <SingleUser user={u} key={`blocked-user-${u.id}`} /> : <></>
                     ))
                 }
             </Container>
