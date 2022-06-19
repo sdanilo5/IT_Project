@@ -116,13 +116,13 @@ const Jokes = React.memo(() => {
             <h1 className='text-center mb-4  text-light'>Jokes Page</h1>
 
             <div className='d-flex justify-content-center'>
-                <div class="container">
-                    <div class="row height d-flex justify-content-center align-items-center">
-                        <div class="col-md-6 col-sm-7 col-7">
-                            <div class="form">
+                <div className="container">
+                    <div className="row height d-flex justify-content-center align-items-center">
+                        <div className="col-md-6 col-sm-7 col-7">
+                            <div className="form">
                                 <input id='search-jokes' 
                                     type="text" 
-                                    class="form-control form-input" 
+                                    className="form-control form-input" 
                                     placeholder="Search jokes by question..." 
                                     onKeyDown={handleKeyPressed}
                                     onChange={() => isInputEmpty()}

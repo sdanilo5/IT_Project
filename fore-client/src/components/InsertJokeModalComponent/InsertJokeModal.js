@@ -29,7 +29,6 @@ const InsertJokeModal = (props) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    alert('Make sure to enter fill the fields with data!');
                 });
         }
         else{
