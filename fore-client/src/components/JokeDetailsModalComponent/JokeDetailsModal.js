@@ -8,6 +8,7 @@ const JokeDtailsModal = React.memo((props) => {
     const [comments, setComments] = React.useState([]);
     const [update, setUpdate] = React.useState(false);
     const [token, setToken] = React.useState('');
+    const [inFavourites, setInFavourites] = React.useState(props.favourites);
 
     React.useEffect(() => {
         setToken(sessionStorage.getItem('token'));
@@ -32,7 +33,27 @@ const JokeDtailsModal = React.memo((props) => {
             setComments([...comms]);
           })
           .catch(err => console.error("Error: ", err));
+        
     }, [update])
+
+    const helper = async () => {
+      await axios.get(`http://localhost:3000/favourite-jokes/${props.user.id}`)
+          .then(response => {
+                  const data = response.data;
+                  console.log(data);
+                  if(data.length > 0){
+                      for(let i = 0; i < data.length; i++){
+                        console.log(props.id + ' === ' + data[i].id + ' => ' + (props.id === data[i].id))
+                        if(props.id === data[i].id){
+                          console.log(data[i].question)
+                          setInFavourites(true);
+                          break;
+                        }
+                      }
+                  }
+              })
+          .catch(err => console.error('Error: ', err));
+    }
 
     const submitComment = () => {
       const comment = document.getElementById('comment-input').value;
@@ -173,6 +194,40 @@ const JokeDtailsModal = React.memo((props) => {
       }
     }
 
+    const addToFavourites = async () => {
+      const article = {
+        userId: jwt_decode(token).id,
+        foraId: props.id
+      }
+      await axios.post(`http://localhost:3000/favourite-jokes/`, article, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => {
+          // console.log(response);
+          setUpdate(!update);
+          setInFavourites(true);
+        })
+        .catch(err => console.error(err));
+
+    }
+
+    const removeFromFavourites = async () => {
+      console.log('bleeeeeeee')
+      await axios.delete(`http://localhost:3000/favourite-jokes/${jwt_decode(token).id}/${props.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => {
+          // console.log(response.data);
+          setUpdate(!update);
+          setInFavourites(false);
+        })
+        .catch(err => console.error(err));
+    }
+
     return (
           <Modal
             {...props}
@@ -256,6 +311,13 @@ const JokeDtailsModal = React.memo((props) => {
               </Modal.Body>
               <Modal.Footer>
                       <p className='me-auto'>{`${props.dateCreated}`.split('T')[0]}</p>
+                        {
+                          token ? (!inFavourites ?
+                            <a id='edit-joke-btn' className='btn btn-outline-success mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => addToFavourites()}>Add To Favourites</a>
+                            :
+                            <a id='edit-joke-btn' className='btn btn-outline-danger mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => removeFromFavourites()}>Remove Fron Favourites</a>
+                          )  : <></>
+                        }
                         {
                           token && (jwt_decode(token).id === props.user.id) ? (
                             <div>

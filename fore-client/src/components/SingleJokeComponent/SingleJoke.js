@@ -2,8 +2,6 @@ import React from 'react';
 import {Card} from 'react-bootstrap';
 import JokeDetailsModal from '../JokeDetailsModalComponent/JokeDetailsModal';
 
-var variants = ['Primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info',  'Light', 'Dark'];
-
 const SingleJoke = React.memo((props) => {
     const [modalShow, setModalShow] = React.useState(false);
     var variant = props.variant;
@@ -37,9 +35,10 @@ const SingleJoke = React.memo((props) => {
                 dateCreated={props.joke.dateCreated}
                 dateUpdated={props.joke.dateUpdated} 
                 user={props.user}
-
+                
                 show={modalShow} 
                 onHide={() => setModalShow(false)}
+                favourites = {props.favourites}
             />
         </>
     )

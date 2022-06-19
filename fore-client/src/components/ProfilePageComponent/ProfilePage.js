@@ -21,31 +21,36 @@ const incrementInd = () => {
 }
 
 const ProfilePage = (props) => {
-    const [jokes, setJokes] = React.useState([]);
     const [user, setUser] = React.useState({
         id: 0,
         name: "",
         jokes: [],
     });
+    const [favourites, setFavourites] = React.useState([]);
     const [insertJokeModalShow, setInsertJokeModalShow] = React.useState(false);
+    const [showFavourites, setShowFavourites] = React.useState(false);
 
     React.useEffect(()=> {
         const url = window.location.href;
         const splitedUrl = url.split('/');
         const id = splitedUrl[splitedUrl.length-1];
+        
+        getFavouriteJokes();
 
-        axios.get(`http://localhost:3000/users/${id}`)
-            .then(response => {
-                    const data = response.data;
-                    setUser({
-                        id: data[0].id,
-                        name: data[0].name,
-                        pictureName: data[0].pictureName,
-                        isDeleted: data[0].isDeleted,
-                        jokes: data[1]
-                    });
-                })
-            .catch(err => console.error('Error: ', err));
+        if(!showFavourites){
+            axios.get(`http://localhost:3000/users/${id}`)
+                .then(response => {
+                        const data = response.data;
+                        setUser({
+                            id: data[0].id,
+                            name: data[0].name,
+                            pictureName: data[0].pictureName,
+                            isDeleted: data[0].isDeleted,
+                            jokes: data[1]
+                        });
+                    })
+                .catch(err => console.error('Error: ', err));
+        }
     }, [])
 
     const blockUserAction = () => {
@@ -75,6 +80,54 @@ const ProfilePage = (props) => {
                 window.location.replace(`http://localhost:3001/users`);
             })
             .catch(err => console.error(err));
+    }
+
+    const getFavouriteJokes = async () => {
+        await axios.get(`http://localhost:3000/favourite-jokes/${user.id}`)
+        .then(response => {
+                const data = response.data;
+                let jokes = [];
+                if(data.length > 0){
+                    for(let i = 0; i < data.length; i++){
+                        jokes.push({
+                            id: data[i].id,
+                            question: data[i].question,
+                            answer: data[i].answer,
+                            dateCreated: data[i].dateCreated,
+                            dateUpdated: data[i].dateUpdated,
+                            userId: data[i].userId,
+                            userName: data[i].name
+                        });
+                    }
+                }
+                setFavourites({
+                    jokes: jokes
+                });
+            
+            })
+        .catch(err => console.error('Error: ', err));
+    }
+
+    const showFavouriteJokes = async () => {
+        setShowFavourites(!showFavourites);
+        
+        if(!showFavourites){
+            getFavouriteJokes();
+        }
+        else{
+            axios.get(`http://localhost:3000/users/${user.id}`)
+                .then(response => {
+                        const data = response.data;
+                        setUser({
+                            id: data[0].id,
+                            name: data[0].name,
+                            pictureName: data[0].pictureName,
+                            isDeleted: data[0].isDeleted,
+                            jokes: data[1]
+                        });
+                    })
+                .catch(err => console.error('Error: ', err));
+        }
     }
 
     return (
@@ -109,8 +162,17 @@ const ProfilePage = (props) => {
                             </div>
                         </div>
 
-                        <div className="bg-light p-4 d-flex justify-content-end text-center">
-                            
+                        <div className="bg-light p-4 d-flex justify-content-between text-center">
+                            <div>
+                                <a 
+                                    className='btn btn-outline-success btn-lg'
+                                    onClick={() => showFavouriteJokes(true)}
+                                    >
+                                        {
+                                            !showFavourites ? 'Show Favourites' : 'Show User Jokes'
+                                        }
+                                </a>
+                            </div>
                             <ul className="list-inline mb-0">
                                 <li className="list-inline-item">
                                     <h5 className="font-weight-bold mb-0 d-block">{user.jokes.length}</h5><small className="text-muted"> <i className="fa fa-picture-o mr-1"></i>Jokes</small>
@@ -122,24 +184,44 @@ const ProfilePage = (props) => {
                             <div className="d-flex align-items-center justify-content-between mb-3">
                                 <h5 className="mb-0">{user.name}'s Jokes</h5>
                                 <a 
-                                    className={ !window.sessionStorage.getItem('token') || (jwt_decode(window.sessionStorage.getItem('token')).id != user.id) ? 'd-none' : 'btn btn-outline-primary'}
+                                    className={ showFavourites || (!window.sessionStorage.getItem('token') || (jwt_decode(window.sessionStorage.getItem('token')).id !== user.id)) ? 'd-none' : 'btn btn-outline-primary'}
                                     onClick={() => setInsertJokeModalShow(true)}
                                     >
                                         Insert Joke
                                 </a>
                             </div>
                             <hr/>
+                            
                             <div className="row flex-grid justify-content-center align-content-center">
                                 {
-                                    user.jokes.map(joke => {
-                                        return <div className="col d-flex justify-content-center align-content-center">
+                                    showFavourites ? (
+                                        favourites.jokes.map(joke => {
+                                            return <div className="col d-flex justify-content-center align-content-center">
                                                     <SingleJoke
-                                                        joke={joke}
-                                                        user={{id: user.id, name: user.name}}
+                                                        joke={{
+                                                            id: joke.id,
+                                                            question: joke.question,
+                                                            answer: joke.answer,
+                                                            dateCreated: joke.dateCreated,
+                                                            dateUpdated: joke.dateUpdated,
+                                                        }}
+                                                        user={{id: joke.userId, name: joke.userName}}
                                                         variant = {variants[incrementInd()]}
+                                                        favourites = {true}
                                                     />
-                                                </div>
-                                    })
+                                                    </div>
+                                        })
+                                    ) : (
+                                        user.jokes.map(joke => {
+                                            return <div className="col d-flex justify-content-center align-content-center">
+                                                        <SingleJoke
+                                                            joke={joke}
+                                                            user={{id: user.id, name: user.name}}
+                                                            variant = {variants[incrementInd()]}
+                                                        />
+                                                    </div>
+                                        })
+                                    )
                                 }
                             </div>
                         </div>

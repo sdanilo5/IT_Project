@@ -4,7 +4,7 @@ const getAllFavouriteJokesByUserId = async (id) => {
     const [results, metadata] = await dbConnection.query(
         `SELECT f.id, f.question, f.answer, f.dateCreated, f.dateUpdated, f.userId, u.name, u.pictureName, u.isDeleted
          FROM favourite_jokes fj, fora f, user u
-         WHERE fj.userId = ? AND f.id = fj.foraId AND f.isDeleted = 0 AND fj.userId = u.id`,
+         WHERE fj.userId = ? AND f.id = fj.foraId AND f.isDeleted = 0 AND f.userId = u.id AND u.isDeleted = 0`,
          {
             replacements: [id]
          }
@@ -13,6 +13,15 @@ const getAllFavouriteJokesByUserId = async (id) => {
 }
 
 const insertFavouriteJoke = async (favJoke) => {
+    const jokes = await getAllFavouriteJokesByUserId(favJoke.userId);
+    console.log(favJoke);
+    console.log(jokes);
+    for(let i = 0; i < jokes.length; i++){
+        if(jokes[i].id === favJoke.foraId){
+            return 0;
+        }
+    }
+    console.log('ble');
     const [results, metadata] = await dbConnection.query(
         `INSERT INTO favourite_jokes(userId, foraId) VALUES (?, ?)`,
          {
