@@ -7,11 +7,11 @@ const getAllFavouriteJokesByUserId = async (req, res) => {
 
 const insertFavouriteJoke = async (req, res) => {
     const results = await favouriteJokesRepository.insertFavouriteJoke(req.body);
-    res.send(results);
+    res.send({results});
 }
 
 const deleteFavouriteJoke = async (req, res) => {
-    const results = await favouriteJokesRepository.deleteFavouriteJoke(req.params.userId, req.params.foraId);
+    const results = await favouriteJokesRepository.deleteFavouriteJoke(req.params.userId, req.params.jokeId);
     res.send(results);
 }
 
