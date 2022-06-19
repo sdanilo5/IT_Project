@@ -69,7 +69,6 @@ const EditProfile = (props) => {
                     if(file && file.name !== user.pictureName){
                         var formData = new FormData();
                         formData.append('image', file);
-                        
                         axios.post(`http://localhost:3000/users/upload`, formData, {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -77,11 +76,12 @@ const EditProfile = (props) => {
                             }
                         })
                             .then(response => {
-                                // console.log('all good');
-                                // console.log(response);
-                                window.location.replace(`http://localhost:3001/users/${user.id}`);
+                                window.location.href = `http://localhost:3001/users/${user.id}`;
                             })
                             .catch(err => console.error(err));
+                    }
+                    else {
+                        window.location.href = `http://localhost:3001/users/${user.id}`;
                     }
                 })
                 .catch(err => console.error(err));
@@ -115,14 +115,14 @@ const EditProfile = (props) => {
                                 <div className="row">
                                     <div>
                                         <h5 className="mb-1">Username</h5>
-                                        <input id='edit-username-textarea' type='text' className="form-control container-fluid mb-3" value={user.name} />
+                                        <input id='edit-username-textarea' type='text' className="form-control container-fluid mb-3" />
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div>
                                         <h5 className="mb-1">Email</h5>
-                                        <input id='edit-email-textarea' type='email' className="form-control container-fluid mb-3" value={user.email} />
+                                        <input id='edit-email-textarea' type='email' className="form-control container-fluid mb-3" />
                                     </div>
                                 </div>
                                 
