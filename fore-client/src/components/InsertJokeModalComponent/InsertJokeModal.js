@@ -10,24 +10,36 @@ const InsertJokeModal = (props) => {
         var answer = document.getElementById('answer-input').value;
         var token = sessionStorage.getItem('token');
 
-        const article = {
-            question: question,
-            answer: answer,
-            userId: jwt_decode(token).id
-        }
-        
-        axios.post('http://localhost:3000/jokes/', article , {
-            headers: {
-              Authorization: `Bearer ${token}`
+        if(question && answer){
+            const article = {
+                question: question,
+                answer: answer,
+                userId: jwt_decode(token).id
             }
-          })
-            .then(response =>{
-                window.location.replace(`http://localhost:3001/users/${jwt_decode(token).id}`);
+            
+            axios.post('http://localhost:3000/jokes/', article , {
+                headers: {
+                Authorization: `Bearer ${token}`
+                }
             })
-            .catch(err => {
-                console.log(err);
-                alert('Make sure to enter fill the fields with data!');
-            });
+                .then(response =>{
+                    document.getElementById('question-input').style.borderColor = 'lightgray';
+                    document.getElementById('answer-input').style.borderColor = 'lightgray';
+                    window.location.replace(`http://localhost:3001/users/${jwt_decode(token).id}`);
+                })
+                .catch(err => {
+                    console.log(err);
+                    alert('Make sure to enter fill the fields with data!');
+                });
+        }
+        else{
+            if(!question){
+                document.getElementById('question-input').style.borderColor = 'red';
+            }
+            if(!answer){
+                document.getElementById('answer-input').style.borderColor = 'red';
+            }
+        }
     }
 
     return(

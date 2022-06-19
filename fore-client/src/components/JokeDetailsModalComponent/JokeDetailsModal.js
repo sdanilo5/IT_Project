@@ -76,7 +76,7 @@ const JokeDtailsModal = React.memo((props) => {
           }
         })
           .then(response => {
-            console.log(response);
+            // console.log(response);
           })
           .catch(err => console.error(err));
       }
