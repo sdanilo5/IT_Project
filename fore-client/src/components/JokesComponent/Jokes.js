@@ -5,7 +5,6 @@ import SingleJoke from '../SingleJokeComponent/SingleJoke';
 import {
     Container,
 } from 'react-bootstrap';
-import searchImg from './../../images/icons/search_bar_image.png';
 
 var variants = [
     'Success', 
@@ -54,7 +53,6 @@ const Jokes = React.memo(() => {
                     setState({
                         jokes: jokes
                     });
-                    document.getElementById('search-jokes').value = '';
                 })
                 .catch(err => {
                     console.error("Errorrrr: ", err);
