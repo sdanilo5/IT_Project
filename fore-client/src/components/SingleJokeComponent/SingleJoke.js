@@ -33,8 +33,8 @@ const SingleJoke = React.memo((props) => {
                 id={props.joke.id} 
                 question={props.joke.question} 
                 answer={props.joke.answer} 
-                dateCreated={props.joke.dateCreated}
-                dateUpdated={props.joke.dateUpdated} 
+                date_created={props.joke.dateCreated}
+                date_updated={props.joke.dateUpdated} 
                 user={props.user}
                 
                 show={modalShow} 

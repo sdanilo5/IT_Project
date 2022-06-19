@@ -299,7 +299,7 @@ const JokeDtailsModal = React.memo((props) => {
                 </div>            
               </Modal.Body>
               <Modal.Footer>
-                      <p className='me-auto'>{`${props.dateCreated}`.split('T')[0]}</p>
+                      <p className='me-auto'>{`${props.date_created}`.split('T')[0]}</p>
                         {
                           token ? (!inFavourites ?
                             <a id='edit-joke-btn' className='btn btn-outline-success mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => addToFavourites()}>Add To Favourites</a>
