@@ -125,11 +125,13 @@ const JokeDtailsModal = React.memo((props) => {
       let normalJokeDiv = document.getElementById('normal-joke-div');
       let editJokeBtn = document.getElementById('edit-joke-btn');
       let deleteJokeBtn = document.getElementById('delete-joke-btn');
+      let favouritesBtn = document.getElementById('favourites-btn');
       
       editJokeDiv.style.display = 'block';
       normalJokeDiv.style.display = 'none';
       editJokeBtn.style.display = 'none';
       deleteJokeBtn.style.display = 'none';
+      favouritesBtn.style.display = 'none';
     }
 
     const editFinished = () => {
@@ -137,6 +139,7 @@ const JokeDtailsModal = React.memo((props) => {
       let normalJokeDiv = document.getElementById('normal-joke-div');
       let editJokeBtn = document.getElementById('edit-joke-btn');
       let deleteJokeBtn = document.getElementById('delete-joke-btn');
+      let favouritesBtn = document.getElementById('favourites-btn');
       
       const article = {
         question: document.getElementById('edit-joke-question-textarea').value,
@@ -150,7 +153,8 @@ const JokeDtailsModal = React.memo((props) => {
       })
         .then(response => {
           if(response.status === 200){
-            window.location.replace(`http://localhost:3001/users/${props.user.id}`);
+            //window.location.assign(`http://localhost:3001/users/${props.user.id}`);
+            window.location.reload();
           }
         })
         .catch(err =>{
@@ -161,6 +165,7 @@ const JokeDtailsModal = React.memo((props) => {
       normalJokeDiv.style.display = 'block';
       editJokeBtn.style.display = 'inline';
       deleteJokeBtn.style.display = 'inline';
+      favouritesBtn.style.display = 'inline';
     }
 
     const deleteBtnClicked = () => {
@@ -172,7 +177,8 @@ const JokeDtailsModal = React.memo((props) => {
           }
         })
         .then(response => {
-          window.location.replace(`http://localhost:3001/users/${props.user.id}`);
+          //window.location.replace(`http://localhost:3001/users/${props.user.id}`);
+          window.location.reload();
         })
         .catch(err => console.error(err));
       }
@@ -198,7 +204,6 @@ const JokeDtailsModal = React.memo((props) => {
     }
 
     const removeFromFavourites = async () => {
-      console.log('bleeeeeeee')
       await axios.delete(`http://localhost:3000/favourite-jokes/${jwt_decode(token).id}/${props.id}`, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -288,13 +293,13 @@ const JokeDtailsModal = React.memo((props) => {
                   <h1 className='text-center'>Edit Joke</h1>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <h5>Question</h5>
-                    <textarea className="form-control" id="edit-joke-question-textarea" rows="3" placeholder={props.question} />
+                    <textarea className="form-control" id="edit-joke-question-textarea" rows="3" defaultValue={props.question} />
                     <br></br>
                     <h5>Answer</h5>
-                    <textarea className="form-control" id="edit-joke-answer-textarea" rows="3" placeholder={props.answer} />
+                    <textarea className="form-control" id="edit-joke-answer-textarea" rows="3" defaultValue={props.answer} />
                   </Form.Group>
                   <div className='d-flex justify-content-center'>
-                    <Button variant="primary" size="md" onClick={() => editFinished()}>Edit</Button>
+                    <Button variant="primary" size="md" onClick={() => editFinished()}>Save</Button>
                   </div>
                 </div>            
               </Modal.Body>
@@ -302,9 +307,9 @@ const JokeDtailsModal = React.memo((props) => {
                       <p className='me-auto'>{`${props.date_created}`.split('T')[0]}</p>
                         {
                           token ? (!inFavourites ?
-                            <a id='edit-joke-btn' className='btn btn-outline-success mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => addToFavourites()}>Add To Favourites</a>
+                            <a id='favourites-btn' className='btn btn-outline-success mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => addToFavourites()}>Add To Favourites</a>
                             :
-                            <a id='edit-joke-btn' className='btn btn-outline-danger mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => removeFromFavourites()}>Remove Fron Favourites</a>
+                            <a id='favourites-btn' className='btn btn-outline-danger mr-2 pr-5' style={{marginRight: '1rem'}} onClick={() => removeFromFavourites()}>Remove Fron Favourites</a>
                           )  : <></>
                         }
                         {

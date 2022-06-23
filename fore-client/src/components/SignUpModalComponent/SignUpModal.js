@@ -32,7 +32,7 @@ const SignUpModal = (props) => {
                     .then(response =>{
                         let token = response.data.token;
                         sessionStorage.setItem('token', token);
-                        window.location.replace(`http://localhost:3001/`);
+                        window.location.assign(`http://localhost:3001/`);
                     })
                     .catch(err => {
                         console.error(err);

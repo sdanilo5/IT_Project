@@ -20,7 +20,7 @@ const LogInModal = (props) => {
                     sessionStorage.setItem('token', token);
                     document.getElementById('email-lg-input').style.borderColor = 'lightgray';
                     document.getElementById('password-lg-input').style.borderColor = 'lightgray';
-                    window.location.replace(`http://localhost:3001/`);
+                    window.location.assign(`http://localhost:3001/`);
                 })
                 .catch(err => {
                     //console.error(err);
@@ -31,7 +31,7 @@ const LogInModal = (props) => {
             if(!userEmail)
                 document.getElementById('email-lg-input').style.borderColor = 'red';
             if(!userPassword)
-            document.getElementById('password-lg-input').style.borderColor = 'red';
+                document.getElementById('password-lg-input').style.borderColor = 'red';
         }
     }
 

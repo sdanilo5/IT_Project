@@ -25,7 +25,7 @@ const InsertJokeModal = (props) => {
                 .then(response =>{
                     document.getElementById('question-input').style.borderColor = 'lightgray';
                     document.getElementById('answer-input').style.borderColor = 'lightgray';
-                    window.location.replace(`http://localhost:3001/users/${jwt_decode(token).id}`);
+                    window.location.assign(`http://localhost:3001/users/${jwt_decode(token).id}`);
                 })
                 .catch(err => {
                     console.log(err);

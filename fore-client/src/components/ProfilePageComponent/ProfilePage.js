@@ -77,7 +77,7 @@ const ProfilePage = (props) => {
           })
             .then(response => {
                 alert('User has been unblocked');
-                window.location.replace(`http://localhost:3001/users`);
+                window.location.assign(`http://localhost:3001/users`);
             })
             .catch(err => console.error(err));
     }

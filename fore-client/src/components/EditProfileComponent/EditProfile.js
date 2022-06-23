@@ -76,12 +76,12 @@ const EditProfile = (props) => {
                             }
                         })
                             .then(response => {
-                                window.location.href = `http://localhost:3001/users/${user.id}`;
+                                window.location.assign(`http://localhost:3001/users/${user.id}`);
                             })
                             .catch(err => console.error(err));
                     }
                     else {
-                        window.location.href = `http://localhost:3001/users/${user.id}`;
+                        window.location.assign(`http://localhost:3001/users/${user.id}`);
                     }
                 })
                 .catch(err => console.error(err));
@@ -115,14 +115,14 @@ const EditProfile = (props) => {
                                 <div className="row">
                                     <div>
                                         <h5 className="mb-1">Username</h5>
-                                        <input id='edit-username-textarea' type='text' className="form-control container-fluid mb-3" placeholder={user.name}/>
+                                        <input id='edit-username-textarea' type='text' className="form-control container-fluid mb-3" defaultValue={user.name}/>
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div>
                                         <h5 className="mb-1">Email</h5>
-                                        <input id='edit-email-textarea' type='email' className="form-control container-fluid mb-3" placeholder={user.email}/>
+                                        <input id='edit-email-textarea' type='email' className="form-control container-fluid mb-3" defaultValue={user.email}/>
                                     </div>
                                 </div>
                                 

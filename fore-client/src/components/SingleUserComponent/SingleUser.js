@@ -12,7 +12,7 @@ const SingleUser = (props) => {
                 backgroundColor: 'rgba(169, 169, 169, 0.6)',
                 marginBottom: '2rem'
             }}
-            onClick={() => window.location.replace(`http://localhost:3001/users/${props.user.id}`)}
+            onClick={() => window.location.assign(`http://localhost:3001/users/${props.user.id}`)}
         >
             <div className='' style={{display: 'table-row', zIndex: '1'}}>
                 <Image
