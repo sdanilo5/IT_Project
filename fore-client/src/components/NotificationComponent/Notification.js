@@ -27,7 +27,7 @@ const Notification = (props) => {
         <>
             <Dropdown.Item onClick={() => setModalShow(true)}>
                 <Toast>
-                    <Toast.Header>
+                    <Toast.Header closeButton={false}>
                     <img 
                         src={!props.notification.pictureName ? defaultImg : `${window.location.origin}/images/${props.notification.pictureName}`}
                         style={{width: '1rem', height: '1rem'}}
@@ -47,8 +47,8 @@ const Notification = (props) => {
                 id={props.notification.foraId} 
                 question={joke.question} 
                 answer={joke.answer} 
-                dateCreated={joke.dateCreated}
-                dateUpdated={joke.dateUpdated} 
+                date_created={joke.dateCreated}
+                date_updated={joke.dateUpdated} 
                 user={user}
 
                 show={modalShow} 
